@@ -1,0 +1,56 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#4fc3f7"/>
+      <stop offset="100%" stop-color="#0277bd"/>
+    </linearGradient>
+    <linearGradient id="dg2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4fc3f7"/>
+      <stop offset="100%" stop-color="#e0f4ff"/>
+    </linearGradient>
+    <linearGradient id="dgBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#060c14"/>
+      <stop offset="100%" stop-color="#0a1628"/>
+    </linearGradient>
+    <radialGradient id="dgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(79,195,247,0.15)"/>
+      <stop offset="100%" stop-color="rgba(79,195,247,0)"/>
+    </radialGradient>
+    <clipPath id="circle-clip">
+      <circle cx="256" cy="256" r="256"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="256" cy="256" r="256" fill="url(#dgBg)"/>
+  <circle cx="256" cy="256" r="256" fill="url(#dgGlow)"/>
+
+  <!-- Subtle inner ring glow -->
+  <circle cx="256" cy="256" r="230" fill="none" stroke="rgba(79,195,247,0.12)" stroke-width="1"/>
+  <circle cx="256" cy="256" r="200" fill="none" stroke="rgba(79,195,247,0.07)" stroke-width="1"/>
+
+  <!-- Hexagon shield — large, centred -->
+  <polygon points="256,48 438,152 438,360 256,464 74,360 74,152"
+    fill="none" stroke="url(#dg1)" stroke-width="6" stroke-linejoin="round"/>
+  <polygon points="256,72 414,166 414,346 256,440 98,346 98,166"
+    fill="rgba(6,16,30,0.6)" stroke="rgba(79,195,247,0.2)" stroke-width="2"/>
+
+  <!-- Corner accent dots -->
+  <circle cx="256" cy="48"  r="6" fill="#4fc3f7" opacity="0.9"/>
+  <circle cx="438" cy="152" r="6" fill="#4fc3f7" opacity="0.65"/>
+  <circle cx="438" cy="360" r="6" fill="#4fc3f7" opacity="0.65"/>
+  <circle cx="256" cy="464" r="6" fill="#4fc3f7" opacity="0.9"/>
+  <circle cx="74"  cy="360" r="6" fill="#4fc3f7" opacity="0.65"/>
+  <circle cx="74"  cy="152" r="6" fill="#4fc3f7" opacity="0.65"/>
+
+  <!-- F letterform — large and bold -->
+  <rect x="138" y="168" width="28" height="176" fill="url(#dg1)" rx="6"/>
+  <rect x="138" y="168" width="130" height="28"  fill="url(#dg1)" rx="6"/>
+  <rect x="138" y="244" width="100" height="24"  fill="url(#dg2)" rx="6"/>
+
+  <!-- N letterform -->
+  <rect x="290" y="168" width="28" height="176" fill="url(#dg1)" rx="6"/>
+  <rect x="346" y="168" width="28" height="176" fill="url(#dg1)" rx="6"/>
+  <line x1="290" y1="168" x2="374" y2="344" stroke="url(#dg2)" stroke-width="28" stroke-linecap="round"/>
+</svg>
