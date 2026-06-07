@@ -3,15 +3,15 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --fl-red: #e8242e;
-  --fl-red-dark: #a5161e;
-  --fl-red-glow: rgba(232, 36, 46, 0.5);
-  --fl-gold: #f5a623;
-  --fl-dark: #080a0e;
-  --fl-panel: rgba(10, 14, 22, 0.88);
-  --fl-border: rgba(232, 36, 46, 0.3);
-  --fl-text: #c8cdd8;
-  --fl-white: #eef0f4;
+  --fl-red: #4fc3f7;
+  --fl-red-dark: #0277bd;
+  --fl-red-glow: rgba(79,195,247,0.45);
+  --fl-gold: #e0f4ff;
+  --fl-dark: #060c14;
+  --fl-panel: rgba(6,16,30,0.88);
+  --fl-border: rgba(79,195,247,0.22);
+  --fl-text: #b0cfe8;
+  --fl-white: #eaf5fb;
 }
 
 html { scroll-behavior: smooth; }
@@ -36,8 +36,8 @@ body {
   inset: 0;
   z-index: 1;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232,36,46,0.12) 0%, transparent 70%),
-    linear-gradient(to bottom, rgba(8,10,14,0.55) 0%, rgba(8,10,14,0.75) 60%, rgba(8,10,14,0.97) 100%);
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(79,195,247,0.12) 0%, transparent 70%),
+    linear-gradient(to bottom, rgba(6,12,20,0.5) 0%, rgba(6,12,20,0.75) 60%, rgba(6,12,20,0.97) 100%);
   pointer-events: none;
 }
 
@@ -47,8 +47,8 @@ body {
   z-index: 1;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(232,36,46,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(232,36,46,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(79,195,247,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,195,247,0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -64,7 +64,7 @@ nav {
   justify-content: space-between;
   padding: 0 3rem;
   height: 68px;
-  background: rgba(8,10,14,0.95);
+  background: rgba(6,12,20,0.95);
   border-bottom: 1px solid var(--fl-border);
   backdrop-filter: blur(12px);
 }
@@ -132,9 +132,9 @@ nav {
 
 /* ── LIVE TICKER ── */
 .live-ticker {
-  background: rgba(232,36,46,0.08);
-  border-top: 1px solid rgba(232,36,46,0.2);
-  border-bottom: 1px solid rgba(232,36,46,0.2);
+  background: rgba(79,195,247,0.08);
+  border-top: 1px solid rgba(79,195,247,0.2);
+  border-bottom: 1px solid rgba(79,195,247,0.2);
   padding: 0.6rem 0;
   overflow: hidden;
   position: relative;
@@ -157,7 +157,7 @@ nav {
   color: var(--fl-red);
 }
 
-.ticker-sep { color: rgba(232,36,46,0.3); }
+.ticker-sep { color: rgba(79,195,247,0.25); }
 
 @keyframes ticker {
   from { transform: translateX(0); }
@@ -280,7 +280,7 @@ nav {
   padding: 0.85rem 2.2rem;
   border-radius: 3px;
   text-decoration: none;
-  border: 1px solid rgba(232,36,46,0.4);
+  border: 1px solid rgba(79,195,247,0.4);
   display: inline-block;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s, transform 0.15s;
@@ -288,7 +288,7 @@ nav {
 
 .btn-secondary:hover {
   border-color: var(--fl-red);
-  background: rgba(232,36,46,0.08);
+  background: rgba(79,195,247,0.08);
   transform: translateY(-2px);
 }
 
@@ -304,10 +304,10 @@ nav {
   display: inline-block;
 }
 
-.tag-red { color: var(--fl-red); border-color: rgba(232,36,46,0.4); background: rgba(232,36,46,0.08); }
-.tag-gold { color: var(--fl-gold); border-color: rgba(245,166,35,0.4); background: rgba(245,166,35,0.08); }
+.tag-red { color: #4fc3f7; border-color: rgba(79,195,247,0.4); background: rgba(79,195,247,0.08); }
+.tag-gold { color: #c9e8f7; border-color: rgba(150,210,245,0.4); background: rgba(79,195,247,0.08); }
 .tag-green { color: #4ade80; border-color: rgba(74,222,128,0.4); background: rgba(74,222,128,0.08); }
-.tag-gray { color: rgba(200,205,216,0.5); border-color: rgba(200,205,216,0.15); background: rgba(200,205,216,0.05); }
+.tag-gray { color: rgba(176,207,232,0.5); border-color: rgba(176,207,232,0.15); background: rgba(176,207,232,0.05); }
 
 /* ── STATUS DOT ── */
 .status-dot {
@@ -367,7 +367,7 @@ footer {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.68rem;
   letter-spacing: 0.15em;
-  color: rgba(200,205,216,0.28);
+  color: rgba(176,207,232,0.28);
   text-transform: uppercase;
 }
 
@@ -383,7 +383,7 @@ footer {
   font-size: 0.85rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(200,205,216,0.4);
+  color: rgba(176,207,232,0.4);
   text-decoration: none;
   transition: color 0.2s;
 }

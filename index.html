@@ -3,221 +3,551 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frontline Networks – Home</title>
+  <title>Frontline Networks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css" />
   <style>
-    /* ── HOME ONLY STYLES ── */
-    #hero {
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --fl-blue: #4fc3f7;
+      --fl-blue-dark: #0277bd;
+      --fl-blue-glow: rgba(79,195,247,0.45);
+      --fl-ice: #e0f4ff;
+      --fl-dark: #060c14;
+      --fl-panel: rgba(6,16,30,0.9);
+      --fl-border: rgba(79,195,247,0.22);
+      --fl-text: #b0cfe8;
+      --fl-white: #eaf5fb;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--fl-dark);
+      color: var(--fl-text);
+      overflow-x: hidden;
       min-height: 100vh;
-      display: flex;
+    }
+
+    /* ── BACKGROUND ── */
+    #bg-canvas {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    }
+
+    .bg-overlay {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(79,195,247,0.1) 0%, transparent 70%),
+        linear-gradient(to bottom, rgba(6,12,20,0.5) 0%, rgba(6,12,20,0.75) 60%, rgba(6,12,20,0.97) 100%);
+    }
+
+    .grid-lines {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(79,195,247,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .site-wrap { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 68px;
+      background: rgba(6,12,20,0.96);
+      border-bottom: 1px solid var(--fl-border);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-logo {
+      font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.05rem;
+      color: var(--fl-white); letter-spacing: 0.08em; text-decoration: none;
+      display: flex; align-items: center; gap: 10px; cursor: pointer;
+    }
+
+    .nav-logo .logo-accent { color: var(--fl-blue); }
+
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; align-items: center; }
+
+    .nav-links button {
+      font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 0.92rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--fl-text);
+      background: none; border: none; cursor: pointer; padding: 0.4rem 0.85rem;
+      border-radius: 3px; transition: color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .nav-links button::after {
+      content: ''; position: absolute; bottom: -2px; left: 0.85rem; right: 100%;
+      height: 1px; background: var(--fl-blue); transition: right 0.25s ease;
+    }
+
+    .nav-links button:hover, .nav-links button.active { color: var(--fl-white); }
+    .nav-links button:hover::after, .nav-links button.active::after { right: 0.85rem; }
+
+    .nav-cta {
+      background: var(--fl-blue) !important; color: #021824 !important;
+      font-weight: 700 !important; padding: 0.4rem 1.2rem !important;
+      border-radius: 3px; transition: background 0.2s, box-shadow 0.2s !important;
+      margin-left: 0.5rem;
+    }
+
+    .nav-cta:hover {
+      background: var(--fl-blue-dark) !important;
+      box-shadow: 0 0 18px var(--fl-blue-glow) !important;
+      color: var(--fl-white) !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+
+    /* ── TICKER ── */
+    .live-ticker {
+      background: rgba(79,195,247,0.06);
+      border-bottom: 1px solid rgba(79,195,247,0.15);
+      padding: 0.55rem 0; overflow: hidden; position: relative; z-index: 2;
+      margin-top: 68px;
+    }
+
+    .ticker-inner {
+      display: flex; white-space: nowrap;
+      animation: ticker 32s linear infinite; gap: 4rem;
+    }
+
+    .ticker-item {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--fl-blue);
+    }
+
+    .ticker-sep { color: rgba(79,195,247,0.25); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── VIEWS — hidden by default, shown via JS ── */
+    .view { display: none; flex: 1; }
+    .view.active { display: block; }
+
+    /* ── SHARED SECTION STYLES ── */
+    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem 5rem; }
+
+    .page-eyebrow {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.35em; text-transform: uppercase; color: var(--fl-blue);
+      margin-bottom: 0.85rem;
+    }
+
+    .page-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900;
+      color: var(--fl-white); text-transform: uppercase; line-height: 1.05;
+      margin-bottom: 0.9rem;
+    }
+
+    .page-title span { color: var(--fl-blue); }
+
+    .page-desc {
+      font-size: 1.1rem; line-height: 1.78; color: var(--fl-text);
+      max-width: 620px; margin-bottom: 2.75rem;
+    }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.32em; text-transform: uppercase; color: var(--fl-blue);
+      margin-bottom: 0.6rem; margin-top: 3rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', monospace; font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 700; color: var(--fl-white); text-transform: uppercase;
+      line-height: 1.1; margin-bottom: 0.6rem;
+    }
+
+    .section-title span { color: var(--fl-blue); }
+
+    .divider {
+      height: 1px; margin: 2.5rem 0;
+      background: linear-gradient(90deg, transparent, var(--fl-border), transparent);
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.35rem;
+    }
+
+    .card {
+      background: var(--fl-panel); border: 1px solid var(--fl-border);
+      border-radius: 8px; padding: 1.85rem 1.6rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--fl-blue), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+
+    .card:hover { border-color: rgba(79,195,247,0.5); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 18px rgba(79,195,247,0.08); }
+    .card:hover::before { opacity: 1; }
+
+    .card-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+
+    .card-title {
+      font-family: 'Orbitron', monospace; font-size: 0.88rem; font-weight: 700;
+      color: var(--fl-white); text-transform: uppercase; letter-spacing: 0.07em;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-text { font-size: 0.98rem; line-height: 1.65; color: var(--fl-text); }
+
+    /* ── TAGS ── */
+    .tag {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.66rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.22rem 0.7rem; border-radius: 3px; border: 1px solid;
+      display: inline-block;
+    }
+
+    .tag-blue { color: #4fc3f7; border-color: rgba(79,195,247,0.4); background: rgba(79,195,247,0.08); }
+    .tag-ice  { color: #c9e8f7; border-color: rgba(150,210,245,0.3); background: rgba(150,210,245,0.06); }
+    .tag-green{ color: #4ade80; border-color: rgba(74,222,128,0.35); background: rgba(74,222,128,0.07); }
+    .tag-gray { color: rgba(176,207,232,0.45); border-color: rgba(176,207,232,0.12); background: rgba(176,207,232,0.04); }
+
+    /* ── STATUS DOT ── */
+    .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+    .dot-live { background: #4ade80; box-shadow: 0 0 6px #4ade80; animation: blink 2s ease-in-out infinite; }
+    .dot-off  { background: #4a6a80; }
+    .dot-soon { background: #4fc3f7; box-shadow: 0 0 5px #4fc3f7; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ── BUTTONS ── */
+    .btn {
+      font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.12em; text-transform: uppercase; padding: 0.85rem 2.2rem;
+      border-radius: 3px; text-decoration: none; display: inline-block; cursor: pointer;
+      border: none; transition: all 0.2s;
+    }
+
+    .btn-solid { background: var(--fl-blue); color: #021824; }
+    .btn-solid:hover { background: var(--fl-blue-dark); box-shadow: 0 0 28px var(--fl-blue-glow); transform: translateY(-2px); color: var(--fl-white); }
+
+    .btn-outline { background: transparent; color: var(--fl-white); border: 1px solid rgba(79,195,247,0.4); }
+    .btn-outline:hover { border-color: var(--fl-blue); background: rgba(79,195,247,0.08); transform: translateY(-2px); }
+
+    /* ─────────────────────────────────────
+       VIEW: HOME
+    ───────────────────────────────────── */
+    #view-home {
+      min-height: calc(100vh - 68px);
+      display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
+      padding: 5rem 2rem 4rem;
     }
 
+    #view-home.active { display: flex; }
+
     .hero-eyebrow {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.32em;
-      color: var(--fl-red);
-      text-transform: uppercase;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.76rem;
+      letter-spacing: 0.32em; color: var(--fl-blue); text-transform: uppercase;
       margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.2s forwards;
+      opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
     }
 
     .hero-title {
       font-family: 'Orbitron', monospace;
-      font-size: clamp(2.8rem, 8vw, 6.5rem);
-      font-weight: 900;
-      line-height: 1;
-      color: var(--fl-white);
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.4s forwards;
+      font-size: clamp(3rem, 9vw, 7rem); font-weight: 900;
+      line-height: 0.95; color: var(--fl-white); text-transform: uppercase;
+      opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
     }
 
-    .wave-text {
+    .hero-title .wave {
       display: inline-block;
-      background: linear-gradient(90deg, var(--fl-red), var(--fl-gold), var(--fl-red));
+      background: linear-gradient(90deg, #4fc3f7, #ffffff, #4fc3f7);
       background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       animation: shimmer 3s linear infinite;
     }
 
     @keyframes shimmer { to { background-position: 200% center; } }
 
     .hero-sub {
-      font-size: 1.2rem;
-      font-weight: 300;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(200,205,216,0.6);
-      margin-top: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.6s forwards;
+      font-size: 1.15rem; font-weight: 300; letter-spacing: 0.28em;
+      text-transform: uppercase; color: rgba(176,207,232,0.55);
+      margin-top: 1.1rem;
+      opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
     }
 
     .hero-desc {
-      max-width: 540px;
-      margin: 1.75rem auto 0;
-      font-size: 1.1rem;
-      line-height: 1.75;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.8s forwards;
+      max-width: 520px; margin: 1.75rem auto 0; font-size: 1.1rem; line-height: 1.78;
+      opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
     }
 
     .hero-btns {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.7s 1s forwards;
+      display: flex; gap: 1rem; margin-top: 2.5rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.7s 1s forwards;
     }
 
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.25em;
-      color: rgba(200,205,216,0.28);
-      text-transform: uppercase;
-      animation: bob 2s ease-in-out infinite;
-    }
-
-    @keyframes bob {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(7px); }
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── QUICK STATS BAR ── */
+    /* ── LIVE STATS BAR ── */
     .stats-bar {
-      background: var(--fl-panel);
-      border: 1px solid var(--fl-border);
-      border-radius: 8px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 0;
-      margin: 0 2rem;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+      display: flex; gap: 0; margin-top: 4rem; width: 100%; max-width: 700px;
+      background: var(--fl-panel); border: 1px solid var(--fl-border); border-radius: 8px;
       overflow: hidden;
+      opacity: 0; animation: fadeUp 0.7s 1.2s forwards;
     }
 
-    .stats-bar-item {
-      padding: 1.75rem 1.5rem;
-      text-align: center;
+    .stat-item {
+      flex: 1; padding: 1.25rem 1rem; text-align: center;
       border-right: 1px solid var(--fl-border);
     }
 
-    .stats-bar-item:last-child { border-right: none; }
+    .stat-item:last-child { border-right: none; }
 
-    .stats-bar-value {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--fl-red);
-      display: block;
+    .stat-val {
+      font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700;
+      color: var(--fl-blue); display: flex; align-items: center; justify-content: center; gap: 7px;
     }
 
-    .stats-bar-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      color: rgba(200,205,216,0.4);
-      text-transform: uppercase;
-      margin-top: 0.3rem;
-      display: block;
+    .stat-lbl {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
+      letter-spacing: 0.18em; color: rgba(176,207,232,0.35);
+      text-transform: uppercase; margin-top: 0.3rem;
     }
 
-    /* ── QUICK NAV CARDS ── */
-    .quicknav {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.5rem;
+    @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:none; } }
+
+    /* ─────────────────────────────────────
+       VIEW: ABOUT
+    ───────────────────────────────────── */
+    .mission-block {
+      background: var(--fl-panel); border: 1px solid var(--fl-border);
+      border-left: 3px solid var(--fl-blue); border-radius: 0 6px 6px 0;
+      padding: 2rem 2rem 2rem 2.5rem; margin-bottom: 2.75rem;
     }
 
-    .qcard {
-      background: var(--fl-panel);
-      border: 1px solid var(--fl-border);
-      border-radius: 8px;
-      padding: 2rem 1.5rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.75rem;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      position: relative;
-      overflow: hidden;
+    .mission-block p { font-size: 1.1rem; line-height: 1.85; color: var(--fl-text); }
+    .mission-block p + p { margin-top: 1rem; }
+
+    .rules-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+
+    .rules-list li {
+      display: flex; gap: 1rem; align-items: flex-start;
+      font-size: 1.02rem; line-height: 1.6; color: var(--fl-text);
+      background: var(--fl-panel); border: 1px solid var(--fl-border);
+      border-radius: 5px; padding: 1rem 1.25rem;
+      transition: border-color 0.25s;
     }
 
-    .qcard::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--fl-red), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
+    .rules-list li:hover { border-color: rgba(79,195,247,0.4); }
+
+    .rule-num {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+      color: var(--fl-blue); letter-spacing: 0.1em; flex-shrink: 0; margin-top: 3px;
     }
 
-    .qcard:hover {
-      border-color: rgba(232,36,46,0.55);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 18px rgba(232,36,46,0.1);
+    /* ─────────────────────────────────────
+       VIEW: SERVERS
+    ───────────────────────────────────── */
+    .server-card {
+      background: var(--fl-panel); border: 1px solid var(--fl-border);
+      border-radius: 8px; overflow: hidden; margin-bottom: 2rem;
     }
 
-    .qcard:hover::before { opacity: 1; }
-
-    .qcard-icon { font-size: 2rem; }
-
-    .qcard-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--fl-white);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
+    .server-banner {
+      background: linear-gradient(135deg, #060c18 0%, #071828 50%, #060c18 100%);
+      padding: 2.5rem; display: flex; align-items: flex-start; gap: 2rem;
+      border-bottom: 1px solid var(--fl-border); flex-wrap: wrap;
     }
 
-    .qcard-desc {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: var(--fl-text);
+    .game-badge {
+      flex-shrink: 0; width: 88px; height: 88px;
+      background: rgba(79,195,247,0.1); border: 2px solid var(--fl-blue);
+      border-radius: 8px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 4px;
     }
 
-    .qcard-arrow {
-      margin-top: auto;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: var(--fl-red);
-      text-transform: uppercase;
+    .game-badge-icon { font-size: 2rem; }
+    .game-badge-label { font-family: 'Share Tech Mono', monospace; font-size: 0.56rem; letter-spacing: 0.2em; color: var(--fl-blue); text-transform: uppercase; }
+
+    .server-info { flex: 1; min-width: 260px; }
+
+    .server-name { font-family: 'Orbitron', monospace; font-size: clamp(1.4rem,3vw,2rem); font-weight: 900; color: var(--fl-white); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .server-name span { color: var(--fl-blue); }
+
+    .server-tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+
+    .server-desc { font-size: 1.02rem; line-height: 1.72; color: var(--fl-text); max-width: 540px; margin-bottom: 1.2rem; }
+
+    .server-ip {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.14em; color: rgba(176,207,232,0.4); text-transform: uppercase;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      padding: 0.5rem 1rem; border-radius: 4px;
+    }
+
+    .server-stats-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+      border-top: 1px solid var(--fl-border);
+    }
+
+    .stat-cell { padding: 1.4rem; text-align: center; border-right: 1px solid var(--fl-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-cell-val { font-family: 'Orbitron', monospace; font-size: 1.2rem; font-weight: 700; color: var(--fl-blue); display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .stat-cell-lbl { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.18em; color: rgba(176,207,232,0.35); text-transform: uppercase; margin-top: 0.3rem; }
+
+    /* category cards */
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px,1fr)); gap: 1.25rem; margin-top: 1.25rem; }
+
+    .cat-card {
+      background: var(--fl-panel); border: 1px solid var(--fl-border);
+      border-radius: 6px; padding: 1.7rem; display: flex; gap: 1.2rem;
+      align-items: flex-start; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .cat-card:hover { border-color: rgba(79,195,247,0.5); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.35); }
+    .cat-card.dim { opacity: 0.55; filter: grayscale(0.25); }
+
+    .cat-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: rgba(79,195,247,0.08); border: 1px solid rgba(79,195,247,0.22);
+      border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+    }
+
+    .cat-icon.soon-icon { background: rgba(79,195,247,0.04); border-color: rgba(79,195,247,0.12); }
+
+    .cat-body { flex: 1; }
+    .cat-name { font-family: 'Orbitron', monospace; font-size: 0.86rem; font-weight: 700; color: var(--fl-white); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+    .cat-desc { font-size: 0.95rem; line-height: 1.6; color: var(--fl-text); margin-bottom: 0.6rem; }
+    .cat-status { display: inline-flex; align-items: center; gap: 5px; font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .s-live { color: #4ade80; } .s-soon { color: var(--fl-blue); }
+
+    /* coming panel */
+    .coming-panel {
+      background: linear-gradient(135deg, rgba(79,195,247,0.04) 0%, var(--fl-panel) 50%, rgba(79,195,247,0.04) 100%);
+      border: 1px solid rgba(79,195,247,0.2); border-radius: 8px;
+      padding: 3rem 2.5rem; text-align: center; position: relative; overflow: hidden; margin-top: 3rem;
+    }
+
+    .coming-panel::before { content:''; position:absolute; top:0;left:0;right:0; height:1px; background: linear-gradient(90deg,transparent,var(--fl-blue),transparent); }
+
+    .coming-badge { display: inline-block; font-family: 'Share Tech Mono', monospace; font-size: 0.66rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--fl-blue); background: rgba(79,195,247,0.1); border: 1px solid rgba(79,195,247,0.25); padding: 0.28rem 1rem; border-radius: 3px; margin-bottom: 1.5rem; }
+
+    .coming-panel h3 { font-family: 'Orbitron', monospace; font-size: clamp(1.2rem,3vw,1.8rem); font-weight: 700; color: var(--fl-white); text-transform: uppercase; margin-bottom: 0.9rem; }
+    .coming-panel p { font-size: 1.05rem; line-height: 1.75; color: var(--fl-text); max-width: 540px; margin: 0 auto 2rem; }
+
+    .coming-games { display: flex; gap: 0.85rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+
+    .coming-game { background: rgba(79,195,247,0.06); border: 1px solid rgba(79,195,247,0.16); border-radius: 5px; padding: 0.6rem 1.25rem; display: flex; align-items: center; gap: 0.5rem; font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.06em; color: rgba(176,207,232,0.65); text-transform: uppercase; }
+
+    .notify-row { display: flex; gap: 0.75rem; max-width: 400px; margin: 0 auto; justify-content: center; }
+    .notify-input { flex:1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 3px; padding: 0.75rem 1rem; font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: var(--fl-white); outline: none; transition: border-color 0.2s; }
+    .notify-input::placeholder { color: rgba(176,207,232,0.3); }
+    .notify-input:focus { border-color: rgba(79,195,247,0.5); }
+    .notify-btn { background: var(--fl-blue); color: #021824; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.92rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 1.3rem; border: none; border-radius: 3px; cursor: pointer; white-space: nowrap; transition: background 0.2s, box-shadow 0.2s; }
+    .notify-btn:hover { background: var(--fl-blue-dark); box-shadow: 0 0 18px var(--fl-blue-glow); }
+
+    /* ─────────────────────────────────────
+       VIEW: STORE
+    ───────────────────────────────────── */
+    .store-notice {
+      background: rgba(79,195,247,0.06); border: 1px solid rgba(79,195,247,0.18);
+      border-radius: 6px; padding: 1rem 1.5rem;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.12em; color: var(--fl-blue); text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(265px,1fr)); gap: 1.5rem; align-items: start; }
+
+    .store-card { background: var(--fl-panel); border: 1px solid var(--fl-border); border-radius: 8px; padding: 2rem 1.75rem; position: relative; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
+    .store-card:hover { transform: translateY(-5px); box-shadow: 0 14px 40px rgba(0,0,0,0.4), 0 0 20px rgba(79,195,247,0.1); border-color: rgba(79,195,247,0.5); }
+    .store-card.featured { border-color: var(--fl-blue); box-shadow: 0 0 28px rgba(79,195,247,0.14); }
+
+    .featured-badge { position:absolute; top:-13px; left:50%; transform:translateX(-50%); background: var(--fl-blue); color:#021824; font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; padding:0.25rem 1rem; border-radius:20px; white-space:nowrap; font-weight:700; }
+
+    .store-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem; }
+    .store-icon { font-size:1.75rem; }
+    .store-tier { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; padding:0.22rem 0.7rem; border-radius:3px; border:1px solid; }
+    .tier-1 { color:#90caf9; border-color:rgba(144,202,249,0.4); background:rgba(144,202,249,0.08); }
+    .tier-2 { color:#4fc3f7; border-color:rgba(79,195,247,0.5); background:rgba(79,195,247,0.1); }
+    .tier-3 { color:#e0f4ff; border-color:rgba(224,244,255,0.4); background:rgba(224,244,255,0.07); }
+
+    .store-name { font-family:'Orbitron',monospace; font-size:1rem; font-weight:700; color:var(--fl-white); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.3rem; }
+    .store-price { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:rgba(176,207,232,0.35); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1.5rem; }
+
+    .store-perks { list-style:none; margin-bottom:1.75rem; display:flex; flex-direction:column; gap:0.55rem; }
+    .store-perks li { font-size:0.97rem; color:var(--fl-text); }
+
+    .store-btn { display:block; width:100%; text-align:center; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem; border-radius:4px; text-decoration:none; transition:all 0.2s; cursor:pointer; border:none; }
+    .store-btn.solid { background:var(--fl-blue); color:#021824; }
+    .store-btn.solid:hover { background:var(--fl-blue-dark); box-shadow:0 0 20px var(--fl-blue-glow); color:var(--fl-white); }
+    .store-btn.outline { background:transparent; color:var(--fl-white); border:1px solid rgba(79,195,247,0.35); }
+    .store-btn.outline:hover { border-color:var(--fl-blue); background:rgba(79,195,247,0.08); }
+
+    /* ─────────────────────────────────────
+       VIEW: COMMUNITY
+    ───────────────────────────────────── */
+    .comm-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:1.35rem; margin-bottom:3rem; }
+
+    .comm-card { background:var(--fl-panel); border:1px solid var(--fl-border); border-radius:8px; padding:2rem 1.75rem; text-decoration:none; display:flex; flex-direction:column; gap:0.8rem; transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s; position:relative; overflow:hidden; }
+    .comm-card::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; background:linear-gradient(90deg,transparent,var(--fl-blue),transparent); opacity:0; transition:opacity 0.3s; }
+    .comm-card:hover { border-color:rgba(79,195,247,0.5); transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.4),0 0 18px rgba(79,195,247,0.09); }
+    .comm-card:hover::before { opacity:1; }
+
+    .comm-icon { font-size:2.1rem; }
+    .comm-title { font-family:'Orbitron',monospace; font-size:0.88rem; font-weight:700; color:var(--fl-white); text-transform:uppercase; letter-spacing:0.07em; }
+    .comm-desc { font-size:0.97rem; line-height:1.65; color:var(--fl-text); }
+    .comm-cta { margin-top:auto; font-family:'Share Tech Mono',monospace; font-size:0.66rem; letter-spacing:0.14em; color:var(--fl-blue); text-transform:uppercase; }
+
+    /* forums preview */
+    .forums-box { background:var(--fl-panel); border:1px solid var(--fl-border); border-radius:8px; overflow:hidden; }
+    .forums-hdr { padding:1.25rem 2rem; border-bottom:1px solid var(--fl-border); display:flex; align-items:center; justify-content:space-between; }
+    .forums-hdr h3 { font-family:'Orbitron',monospace; font-size:0.9rem; font-weight:700; color:var(--fl-white); text-transform:uppercase; letter-spacing:0.07em; }
+    .forums-badge { font-family:'Share Tech Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--fl-blue); background:rgba(79,195,247,0.08); border:1px solid rgba(79,195,247,0.2); padding:0.2rem 0.7rem; border-radius:3px; }
+
+    .forum-cat-hdr { display:flex; align-items:center; gap:0.85rem; padding:1rem 2rem; background:rgba(79,195,247,0.03); border-bottom:1px solid rgba(79,195,247,0.08); }
+    .forum-cat-icon { font-size:1.2rem; }
+    .forum-cat-name { font-family:'Orbitron',monospace; font-size:0.76rem; font-weight:700; color:var(--fl-white); text-transform:uppercase; letter-spacing:0.07em; }
+
+    .forum-row { display:flex; align-items:center; justify-content:space-between; padding:0.9rem 2rem 0.9rem 3.25rem; border-bottom:1px solid rgba(79,195,247,0.06); gap:1rem; flex-wrap:wrap; transition:background 0.2s; }
+    .forum-row:last-child { border-bottom:none; }
+    .forum-row:hover { background:rgba(79,195,247,0.03); }
+    .forum-row-title { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:0.97rem; color:var(--fl-text); letter-spacing:0.03em; }
+    .forum-soon { font-family:'Share Tech Mono',monospace; font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--fl-blue); background:rgba(79,195,247,0.07); border:1px solid rgba(79,195,247,0.18); padding:0.14rem 0.55rem; border-radius:3px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--fl-border); padding: 2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem; flex-wrap: wrap; position: relative; z-index: 2;
+    }
+
+    .footer-logo { font-family:'Orbitron',monospace; font-weight:900; font-size:0.95rem; color:var(--fl-white); letter-spacing:0.08em; cursor:pointer; }
+    .footer-logo span { color:var(--fl-blue); }
+    .footer-copy { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:0.14em; color:rgba(176,207,232,0.25); text-transform:uppercase; }
+    .footer-links { display:flex; gap:1.25rem; list-style:none; }
+    .footer-links a { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(176,207,232,0.38); text-decoration:none; transition:color 0.2s; cursor:pointer; }
+    .footer-links a:hover { color:var(--fl-blue); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.55s ease,transform 0.55s ease; }
+    .reveal.in { opacity:1; transform:none; }
+
+    /* ── MOBILE ── */
+    @media(max-width:768px){
+      nav { padding:0 1.25rem; }
+      .nav-links { gap:0; }
+      .nav-links button { font-size:0.78rem; padding:0.35rem 0.5rem; }
+      footer { flex-direction:column; text-align:center; }
+      .page-wrap { padding:3rem 1.25rem 4rem; }
+      .server-banner { flex-direction:column; gap:1.25rem; }
     }
   </style>
 </head>
@@ -229,30 +559,30 @@
 
 <div class="site-wrap">
 
-  <!-- NAV -->
+  <!-- ── NAV ── -->
   <nav>
-    <a class="nav-logo" href="index.html">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fl-red)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <div class="nav-logo" onclick="showView('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#4fc3f7"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
       FRONTLINE <span class="logo-accent">NETX</span>
-    </a>
+    </div>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="pages/about.html">About</a></li>
-      <li><a href="pages/servers.html">Servers</a></li>
-      <li><a href="pages/store.html">Store</a></li>
-      <li><a href="pages/community.html">Community</a></li>
-      <li><a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="nav-cta">Join Now</a></li>
+      <li><button onclick="showView('home')"    id="nav-home">Home</button></li>
+      <li><button onclick="showView('about')"   id="nav-about">About</button></li>
+      <li><button onclick="showView('servers')" id="nav-servers">Servers</button></li>
+      <li><button onclick="showView('store')"   id="nav-store">Store</button></li>
+      <li><button onclick="showView('community')" id="nav-community">Community</button></li>
+      <li><button class="nav-cta" onclick="window.open('https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select','_blank')">Join Now</button></li>
     </ul>
   </nav>
 
-  <!-- TICKER -->
+  <!-- ── TICKER ── -->
   <div class="live-ticker">
     <div class="ticker-inner">
       <span class="ticker-item">⬛ Frontline Networks</span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
       <span class="ticker-sep">///</span>
-      <span class="ticker-item">👥 Players Online: <span data-server-players>0</span></span>
+      <span class="ticker-item">👥 Players: <span data-server-players>0</span></span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">⚡ More servers coming soon</span>
       <span class="ticker-sep">///</span>
@@ -260,100 +590,461 @@
       <span class="ticker-sep">///</span>
       <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
       <span class="ticker-sep">///</span>
-      <span class="ticker-item">👥 Players Online: <span data-server-players>0</span></span>
+      <span class="ticker-item">👥 Players: <span data-server-players>0</span></span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">⚡ More servers coming soon</span>
     </div>
   </div>
 
-  <!-- HERO -->
-  <section id="hero" style="max-width:100%">
+  <!-- ══════════════════════════════════════
+       VIEW: HOME
+  ══════════════════════════════════════ -->
+  <div id="view-home" class="view">
     <p class="hero-eyebrow">// Est. 2025 — Gaming Community</p>
-    <h1 class="hero-title"><span class="wave-text">Frontline</span><br>Networks</h1>
+    <h1 class="hero-title"><span class="wave">Frontline</span><br>Networks</h1>
     <p class="hero-sub">Where Roleplay Meets Realism</p>
     <p class="hero-desc">A dedicated gaming network built by players, for players. Immersive roleplay, active staff, and a community that always has your six.</p>
     <div class="hero-btns">
-      <a href="pages/servers.html" class="btn-primary">View Servers</a>
-      <a href="pages/community.html" class="btn-secondary">Join Community</a>
+      <button class="btn btn-solid" onclick="showView('servers')">View Servers</button>
+      <button class="btn btn-outline" onclick="showView('community')">Join Community</button>
     </div>
-    <div class="scroll-hint">
-      <svg width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="1" width="12" height="18" rx="6"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
-      Scroll
-    </div>
-  </section>
-
-  <!-- LIVE STATS BAR -->
-  <div style="max-width:1200px;margin:0 auto;padding:0 2rem 3rem;">
-    <div class="stats-bar reveal">
-      <div class="stats-bar-item">
-        <span class="stats-bar-value" style="display:flex;align-items:center;justify-content:center;gap:8px;">
-          <span class="status-dot dot-offline" data-status-dot></span>
-          <span data-server-status>Offline</span>
-        </span>
-        <span class="stats-bar-label">Server Status</span>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-val"><span class="dot dot-off" data-status-dot></span><span data-server-status>Offline</span></div>
+        <div class="stat-lbl">Server Status</div>
       </div>
-      <div class="stats-bar-item">
-        <span class="stats-bar-value"><span data-server-players>0</span> / <span data-server-maxplayers>0</span></span>
-        <span class="stats-bar-label">Players Online</span>
+      <div class="stat-item">
+        <div class="stat-val"><span data-server-players>0</span>&nbsp;/&nbsp;<span data-server-maxplayers>0</span></div>
+        <div class="stat-lbl">Players Online</div>
       </div>
-      <div class="stats-bar-item">
-        <span class="stats-bar-value">GMOD</span>
-        <span class="stats-bar-label">Current Game</span>
+      <div class="stat-item">
+        <div class="stat-val">GMOD</div>
+        <div class="stat-lbl">Current Game</div>
       </div>
-      <div class="stats-bar-item">
-        <span class="stats-bar-value">PoliceRP</span>
-        <span class="stats-bar-label">Active Mode</span>
+      <div class="stat-item">
+        <div class="stat-val">PoliceRP</div>
+        <div class="stat-lbl">Active Mode</div>
       </div>
     </div>
   </div>
 
-  <!-- QUICK NAV -->
-  <div class="divider"></div>
-  <div class="section">
-    <p class="section-label reveal">// Explore</p>
-    <h2 class="section-title reveal">Where do you want to <span>go?</span></h2>
-    <div class="quicknav">
-      <a href="pages/about.html" class="qcard reveal">
-        <span class="qcard-icon">📡</span>
-        <div class="qcard-title">About Us</div>
-        <p class="qcard-desc">Learn who we are, what we stand for, and the vision behind Frontline Networks.</p>
-        <span class="qcard-arrow">Read More →</span>
-      </a>
-      <a href="pages/servers.html" class="qcard reveal">
-        <span class="qcard-icon">🎮</span>
-        <div class="qcard-title">Our Servers</div>
-        <p class="qcard-desc">View live server status, player count, game modes, and upcoming server launches.</p>
-        <span class="qcard-arrow">View Servers →</span>
-      </a>
-      <a href="pages/store.html" class="qcard reveal">
-        <span class="qcard-icon">🛒</span>
-        <div class="qcard-title">Store</div>
-        <p class="qcard-desc">Support the network and unlock exclusive in-game perks, ranks, and cosmetics.</p>
-        <span class="qcard-arrow">Browse Store →</span>
-      </a>
-      <a href="pages/community.html" class="qcard reveal">
-        <span class="qcard-icon">💬</span>
-        <div class="qcard-title">Community</div>
-        <p class="qcard-desc">Join our Discord, meet the team, apply for staff, and be part of the Frontline family.</p>
-        <span class="qcard-arrow">Join Now →</span>
-      </a>
+  <!-- ══════════════════════════════════════
+       VIEW: ABOUT
+  ══════════════════════════════════════ -->
+  <div id="view-about" class="view">
+    <div class="page-wrap">
+      <p class="page-eyebrow">// Who We Are</p>
+      <h1 class="page-title">About <span>Frontline</span></h1>
+      <p class="page-desc">Built by gamers who wanted something better — a community that puts the player experience first, always.</p>
+
+      <div class="mission-block reveal">
+        <p>Frontline Networks was founded with one goal: build the gaming community we always wished existed. No pay-to-win. No toxic gatekeeping. Just high-quality servers, fair moderation, and a place where every player — new or veteran — feels genuinely welcome.</p>
+        <p>We believe roleplay is at its best when the environment is stable, the rules are clear, and the staff actually care. That's what we're building here, one server at a time.</p>
+      </div>
+
+      <p class="section-label">// What We Offer</p>
+      <h2 class="section-title reveal">Built for the <span>Frontline</span></h2>
+      <div class="card-grid" style="margin-bottom:3rem">
+        <div class="card reveal"><span class="card-icon">⚡</span><div class="card-title">High-Performance Servers</div><p class="card-text">Optimised hardware running 24/7 with near-zero downtime. Smooth gameplay and consistent low ping — always.</p></div>
+        <div class="card reveal"><span class="card-icon">🛡</span><div class="card-title">Active Staff & Moderation</div><p class="card-text">Our admin team keeps every server fair and drama-free. Reports handled fast — your experience matters.</p></div>
+        <div class="card reveal"><span class="card-icon">🎭</span><div class="card-title">Immersive Roleplay</div><p class="card-text">Custom scripts, realistic systems, and deep mechanics designed to pull you in. This isn't just a game — it's a world.</p></div>
+        <div class="card reveal"><span class="card-icon">🏆</span><div class="card-title">Rank & Progression</div><p class="card-text">Earn your way through ranks with in-game progression, job advancement, and community recognition.</p></div>
+        <div class="card reveal"><span class="card-icon">💬</span><div class="card-title">Welcoming Community</div><p class="card-text">New player or veteran — you're welcome here. Active Discord, regular events, and good vibes all around.</p></div>
+        <div class="card reveal"><span class="card-icon">🔧</span><div class="card-title">Regular Updates</div><p class="card-text">We listen. Community-voted features and QoL changes roll out regularly — always improving, never standing still.</p></div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="section-label" style="margin-top:2rem">// Ground Rules</p>
+      <h2 class="section-title reveal">How We <span>Operate</span></h2>
+      <ul class="rules-list" style="margin-top:1.25rem">
+        <li class="reveal"><span class="rule-num">[01]</span> Respect every player regardless of rank, role, or experience level.</li>
+        <li class="reveal"><span class="rule-num">[02]</span> No cheating, hacking, exploiting bugs, or using third-party tools to gain an advantage.</li>
+        <li class="reveal"><span class="rule-num">[03]</span> Roleplay seriously — RDM, NLR breaks, and metagaming are not tolerated.</li>
+        <li class="reveal"><span class="rule-num">[04]</span> Follow staff instructions. If you believe a decision is wrong, appeal it — don't argue in-game.</li>
+        <li class="reveal"><span class="rule-num">[05]</span> Keep chat and voice comms clean. Hate speech, slurs, and harassment result in a permanent ban.</li>
+        <li class="reveal"><span class="rule-num">[06]</span> Have fun — that's what this is all for.</li>
+      </ul>
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- ══════════════════════════════════════
+       VIEW: SERVERS
+  ══════════════════════════════════════ -->
+  <div id="view-servers" class="view">
+    <div class="page-wrap">
+      <p class="page-eyebrow">// Live Servers</p>
+      <h1 class="page-title">Our <span>Servers</span></h1>
+      <p class="page-desc">Live status and player counts updated every 60 seconds automatically. More servers launching soon.</p>
+
+      <div class="server-card reveal">
+        <div class="server-banner">
+          <div class="game-badge">
+            <span class="game-badge-icon">🔫</span>
+            <span class="game-badge-label">GMOD</span>
+          </div>
+          <div class="server-info">
+            <div class="server-name">Garry's <span>Mod</span></div>
+            <div class="server-tag-row">
+              <span class="tag tag-blue">PoliceRP</span>
+              <span class="tag tag-ice">Roleplay</span>
+              <span class="tag tag-gray">Server #1</span>
+            </div>
+            <p class="server-desc">Step into a living city where law enforcement meets the criminal underworld. Take the badge, rise through the ranks, investigate crimes — or build your life on the other side of the law. Deep mechanics, active staff, serious roleplay.</p>
+            <div class="server-ip">🖥 IP: Coming Soon &nbsp;|&nbsp; Port: 27015</div>
+          </div>
+        </div>
+        <div class="server-stats-row">
+          <div class="stat-cell">
+            <div class="stat-cell-val"><span class="dot dot-off" data-status-dot></span><span data-server-status>Offline</span></div>
+            <div class="stat-cell-lbl">Status</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-val"><span data-server-players>0</span>&nbsp;/&nbsp;<span data-server-maxplayers>0</span></div>
+            <div class="stat-cell-lbl">Players</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-val">PoliceRP</div>
+            <div class="stat-cell-lbl">Mode</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-val">24/7</div>
+            <div class="stat-cell-lbl">Scheduled</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-label" style="margin-top:2.5rem">// Game Modes</p>
+      <h2 class="section-title reveal">Categories <span>Available</span></h2>
+      <div class="cat-grid">
+        <div class="cat-card reveal">
+          <div class="cat-icon">👮</div>
+          <div class="cat-body">
+            <div class="cat-name">PoliceRP</div>
+            <p class="cat-desc">Patrol the city, respond to calls, make arrests, climb the police ranks. Multiple departments, real progression.</p>
+            <span class="cat-status"><span class="dot dot-live"></span>&nbsp;<span class="s-live">Live Now</span></span>
+          </div>
+        </div>
+        <div class="cat-card dim reveal">
+          <div class="cat-icon soon-icon">🏙</div>
+          <div class="cat-body">
+            <div class="cat-name">DarkRP</div>
+            <p class="cat-desc">Classic freeform roleplay — run jobs, build a base, earn money, and fight for territory in an open city.</p>
+            <span class="cat-status"><span class="dot dot-soon"></span>&nbsp;<span class="s-soon">Coming Soon</span></span>
+          </div>
+        </div>
+        <div class="cat-card dim reveal">
+          <div class="cat-icon soon-icon">🏥</div>
+          <div class="cat-body">
+            <div class="cat-name">SCP-RP</div>
+            <p class="cat-desc">Containment, chaos, and anomalies. Play as Foundation staff or an SCP in a high-stakes environment.</p>
+            <span class="cat-status"><span class="dot dot-soon"></span>&nbsp;<span class="s-soon">Coming Soon</span></span>
+          </div>
+        </div>
+        <div class="cat-card dim reveal">
+          <div class="cat-icon soon-icon">🚀</div>
+          <div class="cat-body">
+            <div class="cat-name">More TBA</div>
+            <p class="cat-desc">We're listening to the community. Vote for the next mode in our Discord and help shape what comes next.</p>
+            <span class="cat-status"><span class="dot dot-soon"></span>&nbsp;<span class="s-soon">In Planning</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="coming-panel reveal">
+        <div class="coming-badge">🚧 Expanding the Network</div>
+        <h3>New Servers on the Horizon</h3>
+        <p>More servers are actively in development. Sign up to be first to know when they go live — early members get priority access and exclusive launch perks.</p>
+        <div class="coming-games">
+          <div class="coming-game">🪖 DarkRP</div>
+          <div class="coming-game">🏝 SCP-RP</div>
+          <div class="coming-game">🚀 More TBA</div>
+        </div>
+        <div class="notify-row">
+          <input class="notify-input" type="email" placeholder="your@email.com" />
+          <button class="notify-btn" onclick="this.textContent='✓ Noted!'">Notify Me</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       VIEW: STORE
+  ══════════════════════════════════════ -->
+  <div id="view-store" class="view">
+    <div class="page-wrap">
+      <p class="page-eyebrow">// Support the Network</p>
+      <h1 class="page-title">Frontline <span>Store</span></h1>
+      <p class="page-desc">Unlock exclusive perks, ranks, and cosmetics. Every purchase keeps our servers running and the community growing.</p>
+
+      <div class="store-notice reveal">🚧 &nbsp; Store is under construction — packages and pricing coming soon. Join Discord to get notified first and receive a launch discount.</div>
+
+      <div class="store-grid">
+        <div class="store-card reveal">
+          <div class="store-hdr"><span class="store-icon">⭐</span><span class="store-tier tier-1">Recruit</span></div>
+          <div class="store-name">Recruit Package</div>
+          <div class="store-price">Price TBA</div>
+          <ul class="store-perks">
+            <li>✔ Custom name colour in-game</li>
+            <li>✔ Donor tag on scoreboard</li>
+            <li>✔ Priority join queue</li>
+            <li>✔ Exclusive Discord role</li>
+            <li>✔ Access to donor lounge</li>
+          </ul>
+          <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn outline">Get Notified on Discord</a>
+        </div>
+
+        <div class="store-card featured reveal">
+          <div class="featured-badge">Most Popular</div>
+          <div class="store-hdr"><span class="store-icon">🔥</span><span class="store-tier tier-2">Officer</span></div>
+          <div class="store-name">Officer Package</div>
+          <div class="store-price">Price TBA</div>
+          <ul class="store-perks">
+            <li>✔ Everything in Recruit</li>
+            <li>✔ Exclusive job access</li>
+            <li>✔ Custom vehicle skin</li>
+            <li>✔ VIP Discord channel</li>
+            <li>✔ Monthly in-game cash bonus</li>
+            <li>✔ Early access to new content</li>
+          </ul>
+          <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn solid">Get Notified on Discord</a>
+        </div>
+
+        <div class="store-card reveal">
+          <div class="store-hdr"><span class="store-icon">💎</span><span class="store-tier tier-3">Commander</span></div>
+          <div class="store-name">Commander Package</div>
+          <div class="store-price">Price TBA</div>
+          <ul class="store-perks">
+            <li>✔ Everything in Officer</li>
+            <li>✔ Custom player model</li>
+            <li>✔ Name in server credits</li>
+            <li>✔ Early access to new servers</li>
+            <li>✔ Direct staff line</li>
+            <li>✔ Community vote influence</li>
+          </ul>
+          <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn outline">Get Notified on Discord</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       VIEW: COMMUNITY
+  ══════════════════════════════════════ -->
+  <div id="view-community" class="view">
+    <div class="page-wrap">
+      <p class="page-eyebrow">// The Frontline Family</p>
+      <h1 class="page-title">Our <span>Community</span></h1>
+      <p class="page-desc">Connect, contribute, and be part of something bigger. Whether you're a player, content creator, or aspiring staff — there's a place for you here.</p>
+
+      <div class="comm-grid">
+        <a href="https://discord.gg/7fahT24btF" target="_blank" class="comm-card reveal">
+          <span class="comm-icon">💬</span>
+          <div class="comm-title">Discord Server</div>
+          <p class="comm-desc">The main hub. Announcements, support, events, and general chat — everything happens here first.</p>
+          <span class="comm-cta">Join Discord →</span>
+        </a>
+        <a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="comm-card reveal">
+          <span class="comm-icon">🎮</span>
+          <div class="comm-title">Sign in with Steam</div>
+          <p class="comm-desc">Link your Steam account to access your player profile, stats, rank history, and member-only features.</p>
+          <span class="comm-cta">Connect Steam →</span>
+        </a>
+        <a href="https://discord.gg/7fahT24btF" target="_blank" class="comm-card reveal">
+          <span class="comm-icon">📋</span>
+          <div class="comm-title">Staff Applications</div>
+          <p class="comm-desc">Passionate about the community? Apply to join our moderation or admin team via our Discord.</p>
+          <span class="comm-cta">Apply Now →</span>
+        </a>
+        <a href="https://discord.gg/7fahT24btF" target="_blank" class="comm-card reveal">
+          <span class="comm-icon">📢</span>
+          <div class="comm-title">Report a Player</div>
+          <p class="comm-desc">Witnessed rule-breaking? Submit a report via our Discord support channel — our team acts fast.</p>
+          <span class="comm-cta">Open Discord →</span>
+        </a>
+      </div>
+
+      <div class="divider"></div>
+      <p class="section-label" style="margin-top:2rem">// Forums</p>
+      <h2 class="section-title reveal">Community <span>Forums</span></h2>
+      <p style="font-size:1.05rem;line-height:1.75;color:var(--fl-text);max-width:580px;margin-bottom:1.75rem;" class="reveal">Full forums are coming soon. For now, all discussion lives in our Discord. Here's a preview of what's planned.</p>
+
+      <div class="forums-box reveal">
+        <div class="forums-hdr">
+          <h3>Frontline Forums</h3>
+          <span class="forums-badge">Coming Soon</span>
+        </div>
+        <div class="forum-cat-hdr"><span class="forum-cat-icon">📣</span><span class="forum-cat-name">Announcements</span></div>
+        <div class="forum-row"><span class="forum-row-title">Server updates, patch notes &amp; news</span><span class="forum-soon">Coming Soon</span></div>
+        <div class="forum-row"><span class="forum-row-title">Staff team introductions</span><span class="forum-soon">Coming Soon</span></div>
+        <div class="forum-cat-hdr"><span class="forum-cat-icon">🎮</span><span class="forum-cat-name">General Discussion</span></div>
+        <div class="forum-row"><span class="forum-row-title">Introductions — say hi to the community</span><span class="forum-soon">Coming Soon</span></div>
+        <div class="forum-row"><span class="forum-row-title">PoliceRP tips and guides</span><span class="forum-soon">Coming Soon</span></div>
+        <div class="forum-row"><span class="forum-row-title">Off-topic — general gaming chat</span><span class="forum-soon">Coming Soon</span></div>
+        <div class="forum-cat-hdr"><span class="forum-cat-icon">⚖</span><span class="forum-cat-name">Appeals &amp; Reports</span></div>
+        <div class="forum-row"><span class="forum-row-title">Ban appeals</span><span class="forum-soon">Coming Soon</span></div>
+        <div class="forum-row"><span class="forum-row-title">Player reports</span><span class="forum-soon">Coming Soon</span></div>
+        <div class="forum-cat-hdr"><span class="forum-cat-icon">💡</span><span class="forum-cat-name">Suggestions</span></div>
+        <div class="forum-row"><span class="forum-row-title">Server feature suggestions</span><span class="forum-soon">Coming Soon</span></div>
+        <div class="forum-row"><span class="forum-row-title">Vote on upcoming game modes</span><span class="forum-soon">Coming Soon</span></div>
+      </div>
+
+      <p style="margin-top:1.2rem;font-family:'Share Tech Mono',monospace;font-size:0.67rem;letter-spacing:0.12em;color:rgba(176,207,232,0.28);text-align:center;text-transform:uppercase;">
+        All community discussion currently lives in our Discord —
+        <a href="https://discord.gg/7fahT24btF" target="_blank" style="color:var(--fl-blue);text-decoration:none;">discord.gg/7fahT24btF</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
   <footer>
-    <a class="footer-logo" href="index.html">FRONTLINE <span>NETX</span></a>
+    <div class="footer-logo" onclick="showView('home')">FRONTLINE <span>NETX</span></div>
     <p class="footer-copy">© 2025 Frontline Networks — All rights reserved</p>
     <ul class="footer-links">
       <li><a href="https://discord.gg/7fahT24btF" target="_blank">Discord</a></li>
-      <li><a href="pages/about.html">About</a></li>
-      <li><a href="pages/store.html">Store</a></li>
-      <li><a href="pages/community.html">Community</a></li>
+      <li><a onclick="showView('about')">About</a></li>
+      <li><a onclick="showView('store')">Store</a></li>
+      <li><a onclick="showView('community')">Community</a></li>
     </ul>
   </footer>
 
-</div>
+</div><!-- /site-wrap -->
 
-<script src="assets/js/main.js"></script>
+<script>
+/* ── VIEW ROUTER ── */
+const views = ['home','about','servers','store','community'];
+
+function showView(name) {
+  views.forEach(v => {
+    const el = document.getElementById('view-' + v);
+    const btn = document.getElementById('nav-' + v);
+    el.classList.remove('active');
+    if (btn) btn.classList.remove('active');
+  });
+
+  const target = document.getElementById('view-' + name);
+  if (!target) return;
+  target.classList.add('active');
+
+  const navBtn = document.getElementById('nav-' + name);
+  if (navBtn) navBtn.classList.add('active');
+
+  // scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // update browser URL without reload
+  history.pushState({view: name}, '', '#' + name);
+
+  // trigger reveal animations for this view
+  setTimeout(() => {
+    target.querySelectorAll('.reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('in'), i * 70);
+    });
+  }, 50);
+}
+
+// Handle browser back/forward
+window.addEventListener('popstate', e => {
+  const hash = location.hash.replace('#','') || 'home';
+  showView(hash);
+});
+
+// Load correct view on page load based on URL hash
+const initView = location.hash.replace('#','') || 'home';
+showView(initView);
+
+/* ── PARTICLE BACKGROUND ── */
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles=[], animId;
+
+  function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+
+  function Particle(){
+    this.reset=function(){
+      this.x=Math.random()*W; this.y=Math.random()*H;
+      this.size=Math.random()*1.4+0.3;
+      this.speedX=(Math.random()-0.5)*0.35; this.speedY=(Math.random()-0.5)*0.35;
+      this.opacity=Math.random()*0.45+0.08;
+      this.color=Math.random()>0.75?'#4fc3f7':'#b0cfe8';
+    };
+    this.reset();
+    this.x=Math.random()*(W||window.innerWidth);
+    this.y=Math.random()*(H||window.innerHeight);
+  }
+
+  function init(n){ particles=[]; for(let i=0;i<n;i++) particles.push(new Particle()); }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.x+=p.speedX; p.y+=p.speedY;
+      if(p.x<0||p.x>W||p.y<0||p.y>H) p.reset();
+      ctx.save(); ctx.globalAlpha=p.opacity; ctx.fillStyle=p.color;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill(); ctx.restore();
+    });
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<100){
+          ctx.save(); ctx.globalAlpha=(1-dist/100)*0.07; ctx.strokeStyle='#4fc3f7'; ctx.lineWidth=0.5;
+          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke(); ctx.restore();
+        }
+      }
+    }
+    animId=requestAnimationFrame(draw);
+  }
+
+  resize(); init(80); draw();
+  window.addEventListener('resize',()=>{ cancelAnimationFrame(animId); resize(); init(80); draw(); });
+})();
+
+/* ── SERVER STATUS ── */
+const SERVER_CONFIG = {
+  ip: 'YOUR_SERVER_IP',
+  port: 27015,
+  workerUrl: null
+};
+
+async function fetchServerStatus(){
+  const statusEls = document.querySelectorAll('[data-server-status]');
+  const playerEls = document.querySelectorAll('[data-server-players]');
+  const maxEls    = document.querySelectorAll('[data-server-maxplayers]');
+  const dots      = document.querySelectorAll('[data-status-dot]');
+
+  if(!SERVER_CONFIG.workerUrl || SERVER_CONFIG.ip==='YOUR_SERVER_IP'){
+    statusEls.forEach(e=>e.textContent='Offline');
+    playerEls.forEach(e=>e.textContent='0');
+    maxEls.forEach(e=>e.textContent='0');
+    dots.forEach(d=>{ d.className='dot dot-off'; });
+    return;
+  }
+
+  try {
+    const res = await fetch(SERVER_CONFIG.workerUrl, {signal:AbortSignal.timeout(5000)});
+    const data = await res.json();
+    if(data.online){
+      statusEls.forEach(e=>e.textContent='Online');
+      playerEls.forEach(e=>e.textContent=data.players??'0');
+      maxEls.forEach(e=>e.textContent=data.maxplayers??'0');
+      dots.forEach(d=>{ d.className='dot dot-live'; });
+    } else {
+      statusEls.forEach(e=>e.textContent='Offline');
+      playerEls.forEach(e=>e.textContent='0');
+      maxEls.forEach(e=>e.textContent='0');
+      dots.forEach(d=>{ d.className='dot dot-off'; });
+    }
+  } catch {
+    statusEls.forEach(e=>e.textContent='Offline');
+    playerEls.forEach(e=>e.textContent='0');
+    maxEls.forEach(e=>e.textContent='0');
+    dots.forEach(d=>{ d.className='dot dot-off'; });
+  }
+}
+
+fetchServerStatus();
+setInterval(fetchServerStatus, 60000);
+</script>
 </body>
 </html>

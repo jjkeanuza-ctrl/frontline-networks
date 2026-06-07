@@ -20,7 +20,7 @@
       this.speedX = (Math.random() - 0.5) * 0.35;
       this.speedY = (Math.random() - 0.5) * 0.35;
       this.opacity = Math.random() * 0.45 + 0.08;
-      this.color = Math.random() > 0.75 ? '#e8242e' : '#c8cdd8';
+      this.color = Math.random() > 0.75 ? '#4fc3f7' : '#c8cdd8';
     };
     this.reset();
     this.x = Math.random() * (W || window.innerWidth);
@@ -53,7 +53,7 @@
         if (dist < 100) {
           ctx.save();
           ctx.globalAlpha = (1 - dist / 100) * 0.07;
-          ctx.strokeStyle = '#e8242e';
+          ctx.strokeStyle = '#4fc3f7';
           ctx.lineWidth = 0.5;
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
