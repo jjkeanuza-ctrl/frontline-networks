@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontline Networks – Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    .store-note-top {
+      background: rgba(245,166,35,0.07);
+      border: 1px solid rgba(245,166,35,0.2);
+      border-radius: 6px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--fl-gold);
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+
+    .store-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.5rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    .store-card {
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-radius: 8px;
+      padding: 2rem 1.75rem;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+
+    .store-card:hover { transform: translateY(-5px); box-shadow: 0 14px 40px rgba(0,0,0,0.4), 0 0 20px rgba(232,36,46,0.1); border-color: rgba(232,36,46,0.5); }
+
+    .store-card-featured { border-color: var(--fl-red); box-shadow: 0 0 28px rgba(232,36,46,0.15); }
+
+    .store-featured-badge {
+      position: absolute;
+      top: -13px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--fl-red);
+      color: var(--fl-white);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.25rem 1rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .store-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+
+    .store-tier-icon { font-size: 1.75rem; }
+
+    .store-tier-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 3px;
+      border: 1px solid;
+    }
+
+    .tier-basic  { color: #7eb8f7; border-color: rgba(126,184,247,0.4); background: rgba(126,184,247,0.08); }
+    .tier-pro    { color: var(--fl-red); border-color: rgba(232,36,46,0.4); background: rgba(232,36,46,0.08); }
+    .tier-elite  { color: var(--fl-gold); border-color: rgba(245,166,35,0.4); background: rgba(245,166,35,0.08); }
+
+    .store-card-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--fl-white);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.35rem;
+    }
+
+    .store-card-price {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(200,205,216,0.38);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .store-perks { list-style: none; margin-bottom: 1.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .store-perks li { font-size: 0.98rem; color: var(--fl-text); padding-left: 0.25rem; }
+
+    .store-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.8rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .store-btn-primary { background: var(--fl-red); color: var(--fl-white); border: 1px solid var(--fl-red); }
+    .store-btn-primary:hover { background: var(--fl-red-dark); box-shadow: 0 0 20px var(--fl-red-glow); }
+    .store-btn-outline { background: transparent; color: var(--fl-white); border: 1px solid rgba(232,36,46,0.35); }
+    .store-btn-outline:hover { border-color: var(--fl-red); background: rgba(232,36,46,0.08); }
+
+    .store-footer-note {
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: rgba(200,205,216,0.3);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="bg-overlay"></div>
+<div class="grid-lines"></div>
+
+<div class="site-wrap">
+
+  <nav>
+    <a class="nav-logo" href="../index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fl-red)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      FRONTLINE <span class="logo-accent">NETX</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="servers.html">Servers</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="nav-cta">Join Now</a></li>
+    </ul>
+  </nav>
+
+  <div class="live-ticker" style="margin-top:68px">
+    <div class="ticker-inner">
+      <span class="ticker-item">🛒 Frontline Store — Coming Soon</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">🎮 Server Status: <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">💬 Join Discord for launch perks</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">🛒 Frontline Store — Coming Soon</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">🎮 Server Status: <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">💬 Join Discord for launch perks</span>
+    </div>
+  </div>
+
+  <div class="page-header">
+    <p class="page-eyebrow">// Support the Network</p>
+    <h1 class="page-title">Frontline <span>Store</span></h1>
+    <p class="page-desc">Unlock exclusive perks, ranks, and cosmetics. Every purchase keeps our servers running and the community growing.</p>
+  </div>
+
+  <div class="section" style="padding-top:0">
+
+    <div class="store-note-top reveal">
+      🚧 &nbsp; Store is currently under construction — packages and pricing coming soon. Join the Discord to get notified first and receive a launch discount.
+    </div>
+
+    <div class="store-grid">
+      <div class="store-card reveal">
+        <div class="store-card-header">
+          <span class="store-tier-icon">⭐</span>
+          <span class="store-tier-badge tier-basic">Recruit</span>
+        </div>
+        <div class="store-card-name">Recruit Package</div>
+        <div class="store-card-price">Price TBA</div>
+        <ul class="store-perks">
+          <li>✔ Custom name colour in-game</li>
+          <li>✔ Donor tag on scoreboard</li>
+          <li>✔ Priority join queue</li>
+          <li>✔ Exclusive Discord role</li>
+          <li>✔ Access to donor lounge</li>
+        </ul>
+        <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn store-btn-outline">Get Notified on Discord</a>
+      </div>
+
+      <div class="store-card store-card-featured reveal">
+        <div class="store-featured-badge">Most Popular</div>
+        <div class="store-card-header">
+          <span class="store-tier-icon">🔥</span>
+          <span class="store-tier-badge tier-pro">Officer</span>
+        </div>
+        <div class="store-card-name">Officer Package</div>
+        <div class="store-card-price">Price TBA</div>
+        <ul class="store-perks">
+          <li>✔ Everything in Recruit</li>
+          <li>✔ Exclusive job access</li>
+          <li>✔ Custom vehicle skin</li>
+          <li>✔ VIP Discord channel access</li>
+          <li>✔ Monthly in-game cash bonus</li>
+          <li>✔ Early access to new content</li>
+        </ul>
+        <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn store-btn-primary">Get Notified on Discord</a>
+      </div>
+
+      <div class="store-card reveal">
+        <div class="store-card-header">
+          <span class="store-tier-icon">💎</span>
+          <span class="store-tier-badge tier-elite">Commander</span>
+        </div>
+        <div class="store-card-name">Commander Package</div>
+        <div class="store-card-price">Price TBA</div>
+        <ul class="store-perks">
+          <li>✔ Everything in Officer</li>
+          <li>✔ Custom player model</li>
+          <li>✔ Name in server credits</li>
+          <li>✔ Early access to new servers</li>
+          <li>✔ Direct staff communication line</li>
+          <li>✔ Community vote influence</li>
+        </ul>
+        <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn store-btn-outline">Get Notified on Discord</a>
+      </div>
+    </div>
+
+    <p class="store-footer-note reveal">🔒 All purchases are final. Packages are per-server. Refunds handled case-by-case via Discord support.</p>
+
+  </div>
+
+  <footer>
+    <a class="footer-logo" href="../index.html">FRONTLINE <span>NETX</span></a>
+    <p class="footer-copy">© 2025 Frontline Networks — All rights reserved</p>
+    <ul class="footer-links">
+      <li><a href="https://discord.gg/7fahT24btF" target="_blank">Discord</a></li>
+      <li><a href="servers.html">Servers</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+  </footer>
+
+</div>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

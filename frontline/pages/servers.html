@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontline Networks – Servers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    /* ── SERVER CARD ── */
+    .server-card {
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .server-banner {
+      background: linear-gradient(135deg, #0d1117 0%, #1a0408 50%, #0d1117 100%);
+      padding: 2.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      border-bottom: 1px solid var(--fl-border);
+      flex-wrap: wrap;
+    }
+
+    .game-badge {
+      flex-shrink: 0;
+      width: 90px; height: 90px;
+      background: rgba(232,36,46,0.1);
+      border: 2px solid var(--fl-red);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .game-badge-icon { font-size: 2rem; }
+
+    .game-badge-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: var(--fl-red);
+      text-transform: uppercase;
+    }
+
+    .server-info { flex: 1; min-width: 260px; }
+
+    .server-name {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      color: var(--fl-white);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .server-name span { color: var(--fl-red); }
+
+    .server-tag-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .server-desc {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--fl-text);
+      max-width: 560px;
+      margin-bottom: 1.25rem;
+    }
+
+    .server-connect {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: rgba(200,205,216,0.4);
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+
+    /* ── LIVE STATS ROW ── */
+    .server-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      border-top: 1px solid var(--fl-border);
+    }
+
+    .stat-cell {
+      padding: 1.5rem;
+      text-align: center;
+      border-right: 1px solid var(--fl-border);
+    }
+
+    .stat-cell:last-child { border-right: none; }
+
+    .stat-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--fl-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(200,205,216,0.38);
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+    }
+
+    /* ── CATEGORY CARDS ── */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .cat-card {
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-radius: 6px;
+      padding: 1.75rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .cat-card:hover {
+      border-color: rgba(232,36,46,0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35), 0 0 14px rgba(232,36,46,0.07);
+    }
+
+    .cat-card.coming {
+      opacity: 0.6;
+      filter: grayscale(0.3);
+    }
+
+    .cat-icon {
+      width: 50px; height: 50px;
+      flex-shrink: 0;
+      background: rgba(232,36,46,0.1);
+      border: 1px solid rgba(232,36,46,0.25);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .cat-icon.coming-icon {
+      background: rgba(245,166,35,0.08);
+      border-color: rgba(245,166,35,0.2);
+    }
+
+    .cat-body { flex: 1; }
+
+    .cat-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--fl-white);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+
+    .cat-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--fl-text);
+      margin-bottom: 0.6rem;
+    }
+
+    .cat-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .status-live { color: #4ade80; }
+    .status-soon { color: var(--fl-gold); }
+
+    /* ── COMING SOON PANEL ── */
+    .coming-panel {
+      background: linear-gradient(135deg, rgba(245,166,35,0.04) 0%, var(--fl-panel) 50%, rgba(245,166,35,0.04) 100%);
+      border: 1px solid rgba(245,166,35,0.2);
+      border-radius: 8px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coming-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--fl-gold), transparent);
+    }
+
+    .coming-badge {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--fl-gold);
+      background: rgba(245,166,35,0.1);
+      border: 1px solid rgba(245,166,35,0.3);
+      padding: 0.3rem 1rem;
+      border-radius: 3px;
+      margin-bottom: 1.5rem;
+    }
+
+    .coming-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--fl-white);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .coming-text {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--fl-text);
+      max-width: 560px;
+      margin: 0 auto 2rem;
+    }
+
+    .coming-games {
+      display: flex;
+      gap: 0.85rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .coming-game {
+      background: rgba(245,166,35,0.07);
+      border: 1px solid rgba(245,166,35,0.18);
+      border-radius: 5px;
+      padding: 0.65rem 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      color: rgba(200,205,216,0.6);
+      text-transform: uppercase;
+    }
+
+    .notify-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 400px;
+      margin: 0 auto;
+      justify-content: center;
+    }
+
+    .notify-input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 3px;
+      padding: 0.75rem 1rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      color: var(--fl-white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .notify-input::placeholder { color: rgba(200,205,216,0.3); }
+    .notify-input:focus { border-color: rgba(245,166,35,0.5); }
+
+    .notify-btn {
+      background: var(--fl-gold);
+      color: #1a0e00;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.3rem;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .notify-btn:hover { background: #e0941a; box-shadow: 0 0 18px rgba(245,166,35,0.35); }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="bg-overlay"></div>
+<div class="grid-lines"></div>
+
+<div class="site-wrap">
+
+  <nav>
+    <a class="nav-logo" href="../index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fl-red)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      FRONTLINE <span class="logo-accent">NETX</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="servers.html">Servers</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="nav-cta">Join Now</a></li>
+    </ul>
+  </nav>
+
+  <div class="live-ticker">
+    <div class="ticker-inner">
+      <span class="ticker-item">🎮 GMOD PoliceRP</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">Status: <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">👥 <span data-server-players>0</span> / <span data-server-maxplayers>0</span> Players</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">⚡ More servers coming soon</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">🎮 GMOD PoliceRP</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">Status: <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">👥 <span data-server-players>0</span> / <span data-server-maxplayers>0</span> Players</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">⚡ More servers coming soon</span>
+    </div>
+  </div>
+
+  <div class="page-header">
+    <p class="page-eyebrow">// Our Servers</p>
+    <h1 class="page-title">Frontline <span>Servers</span></h1>
+    <p class="page-desc">Live server status, player counts, and game modes — updated every 60 seconds automatically.</p>
+  </div>
+
+  <div class="section" style="padding-top:0">
+
+    <!-- GMOD SERVER CARD -->
+    <div class="server-card reveal">
+      <div class="server-banner">
+        <div class="game-badge">
+          <span class="game-badge-icon">🔫</span>
+          <span class="game-badge-label">GMOD</span>
+        </div>
+        <div class="server-info">
+          <h2 class="server-name">Garry's <span>Mod</span></h2>
+          <div class="server-tag-row">
+            <span class="tag tag-red">PoliceRP</span>
+            <span class="tag tag-gold">Roleplay</span>
+            <span class="tag tag-gray">Server #1</span>
+          </div>
+          <p class="server-desc">
+            Step into a living, breathing city where law enforcement meets the criminal underworld. Take the badge as a cop, rise through the ranks, investigate crimes — or build your life on the other side of the law. Deep mechanics, active staff, and a community that takes roleplay seriously.
+          </p>
+          <div class="server-connect">
+            <!-- Replace with your real IP when ready -->
+            🖥 IP: Coming Soon &nbsp;|&nbsp; Port: 27015
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE STATS — auto-updated by main.js -->
+      <div class="server-stats">
+        <div class="stat-cell">
+          <div class="stat-value">
+            <span class="status-dot dot-offline" data-status-dot></span>
+            <span data-server-status>Offline</span>
+          </div>
+          <div class="stat-label">Server Status</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-value"><span data-server-players>0</span>&nbsp;/&nbsp;<span data-server-maxplayers>0</span></div>
+          <div class="stat-label">Players Online</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-value">PoliceRP</div>
+          <div class="stat-label">Game Mode</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Scheduled Uptime</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <p class="section-label reveal" style="margin-top:3rem">// Game Modes & Categories</p>
+    <h2 class="section-title reveal">What's <span>Available</span></h2>
+
+    <div class="cat-grid">
+      <!-- LIVE -->
+      <div class="cat-card reveal">
+        <div class="cat-icon">👮</div>
+        <div class="cat-body">
+          <div class="cat-name">PoliceRP</div>
+          <p class="cat-desc">Patrol the city, respond to 911 calls, make arrests, and climb the police ranks. Multiple departments and real progression.</p>
+          <span class="cat-status">
+            <span class="status-dot dot-live"></span>
+            <span class="status-live">Live Now</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- COMING SOON MODES -->
+      <div class="cat-card coming reveal">
+        <div class="cat-icon coming-icon">🏙</div>
+        <div class="cat-body">
+          <div class="cat-name">DarkRP</div>
+          <p class="cat-desc">Classic freeform roleplay — run jobs, build a base, earn money, and fight for territory in a city with no rules.</p>
+          <span class="cat-status">
+            <span class="status-dot dot-soon"></span>
+            <span class="status-soon">Coming Soon</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="cat-card coming reveal">
+        <div class="cat-icon coming-icon">🏥</div>
+        <div class="cat-body">
+          <div class="cat-name">SCP-RP</div>
+          <p class="cat-desc">Containment, chaos, and anomalies. Play as Foundation staff or an SCP in a high-stakes roleplay environment.</p>
+          <span class="cat-status">
+            <span class="status-dot dot-soon"></span>
+            <span class="status-soon">Coming Soon</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="cat-card coming reveal">
+        <div class="cat-icon coming-icon">🚀</div>
+        <div class="cat-body">
+          <div class="cat-name">More TBA</div>
+          <p class="cat-desc">We're listening to the community. Vote for the next game mode in our Discord and help shape what comes next.</p>
+          <span class="cat-status">
+            <span class="status-dot dot-soon"></span>
+            <span class="status-soon">In Planning</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMING SOON PANEL -->
+    <div style="margin-top:3rem">
+      <div class="coming-panel reveal">
+        <div class="coming-badge">🚧 Expanding the Network</div>
+        <h3 class="coming-title">New Servers on the Horizon</h3>
+        <p class="coming-text">
+          More servers are actively in development. Sign up below to be the first to know when they go live — early members get priority access and exclusive launch perks.
+        </p>
+        <div class="coming-games">
+          <div class="coming-game">🪖 DarkRP</div>
+          <div class="coming-game">🏝 SCP-RP</div>
+          <div class="coming-game">🚀 More TBA</div>
+        </div>
+        <div class="notify-form">
+          <input class="notify-input" type="email" placeholder="your@email.com" />
+          <button class="notify-btn" onclick="this.textContent='✓ Noted!'">Notify Me</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <a class="footer-logo" href="../index.html">FRONTLINE <span>NETX</span></a>
+    <p class="footer-copy">© 2025 Frontline Networks — All rights reserved</p>
+    <ul class="footer-links">
+      <li><a href="https://discord.gg/7fahT24btF" target="_blank">Discord</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="store.html">Store</a></li>
+    </ul>
+  </footer>
+
+</div>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

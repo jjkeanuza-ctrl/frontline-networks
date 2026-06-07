@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontline Networks – Community</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    .community-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.4rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .comm-card {
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-radius: 8px;
+      padding: 2rem 1.75rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .comm-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--fl-red), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .comm-card:hover { border-color: rgba(232,36,46,0.55); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 18px rgba(232,36,46,0.1); }
+    .comm-card:hover::before { opacity: 1; }
+
+    .comm-card-icon { font-size: 2.2rem; }
+
+    .comm-card-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--fl-white);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .comm-card-desc { font-size: 0.98rem; line-height: 1.65; color: var(--fl-text); }
+
+    .comm-card-cta {
+      margin-top: auto;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--fl-red);
+      text-transform: uppercase;
+    }
+
+    /* FORUMS SECTION */
+    .forums-placeholder {
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .forums-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--fl-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .forums-header h3 {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--fl-white);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .forum-category {
+      border-bottom: 1px solid var(--fl-border);
+    }
+
+    .forum-category:last-child { border-bottom: none; }
+
+    .forum-cat-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 2rem;
+      background: rgba(232,36,46,0.03);
+      border-bottom: 1px solid rgba(232,36,46,0.1);
+    }
+
+    .forum-cat-icon { font-size: 1.3rem; }
+
+    .forum-cat-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--fl-white);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .forum-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem 1rem 3.5rem;
+      border-bottom: 1px solid rgba(232,36,46,0.07);
+      gap: 1rem;
+      flex-wrap: wrap;
+      transition: background 0.2s;
+    }
+
+    .forum-row:last-child { border-bottom: none; }
+    .forum-row:hover { background: rgba(232,36,46,0.04); }
+
+    .forum-row-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--fl-text);
+      letter-spacing: 0.04em;
+    }
+
+    .forum-row-meta {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: rgba(200,205,216,0.3);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .forum-coming {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fl-gold);
+      background: rgba(245,166,35,0.08);
+      border: 1px solid rgba(245,166,35,0.2);
+      padding: 0.15rem 0.6rem;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="bg-overlay"></div>
+<div class="grid-lines"></div>
+
+<div class="site-wrap">
+
+  <nav>
+    <a class="nav-logo" href="../index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fl-red)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      FRONTLINE <span class="logo-accent">NETX</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="servers.html">Servers</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="nav-cta">Join Now</a></li>
+    </ul>
+  </nav>
+
+  <div class="live-ticker" style="margin-top:68px">
+    <div class="ticker-inner">
+      <span class="ticker-item">💬 Join Our Community</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">discord.gg/7fahT24btF</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">💬 Join Our Community</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">discord.gg/7fahT24btF</span>
+    </div>
+  </div>
+
+  <div class="page-header">
+    <p class="page-eyebrow">// The Frontline Family</p>
+    <h1 class="page-title">Our <span>Community</span></h1>
+    <p class="page-desc">Connect, contribute, and be part of something bigger. Whether you're a player, content creator, or aspiring staff — there's a place for you here.</p>
+  </div>
+
+  <div class="section" style="padding-top:0">
+
+    <!-- QUICK LINKS -->
+    <p class="section-label reveal">// Get Involved</p>
+    <div class="community-grid">
+      <a href="https://discord.gg/7fahT24btF" target="_blank" class="comm-card reveal">
+        <span class="comm-card-icon">💬</span>
+        <div class="comm-card-title">Discord Server</div>
+        <p class="comm-card-desc">The main hub. Announcements, support, events, and general chat — everything happens here first. Click to join now.</p>
+        <span class="comm-card-cta">Join Discord →</span>
+      </a>
+
+      <a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="comm-card reveal">
+        <span class="comm-card-icon">🎮</span>
+        <div class="comm-card-title">Sign in with Steam</div>
+        <p class="comm-card-desc">Link your Steam account to access your player profile, stats, rank history, and member-only features on the site.</p>
+        <span class="comm-card-cta">Connect Steam →</span>
+      </a>
+
+      <a href="https://discord.gg/7fahT24btF" target="_blank" class="comm-card reveal">
+        <span class="comm-card-icon">📋</span>
+        <div class="comm-card-title">Staff Applications</div>
+        <p class="comm-card-desc">Passionate about the community? Apply to join our moderation or admin team. Applications open via our Discord.</p>
+        <span class="comm-card-cta">Apply Now →</span>
+      </a>
+
+      <a href="https://discord.gg/7fahT24btF" target="_blank" class="comm-card reveal">
+        <span class="comm-card-icon">📢</span>
+        <div class="comm-card-title">Report a Player</div>
+        <p class="comm-card-desc">Experienced or witnessed rule-breaking? Submit a report via our Discord support channel and our team will act fast.</p>
+        <span class="comm-card-cta">Open Discord →</span>
+      </a>
+    </div>
+
+    <!-- FORUMS PREVIEW -->
+    <div class="divider"></div>
+    <div style="margin-top:3rem">
+      <p class="section-label reveal">// Forums</p>
+      <h2 class="section-title reveal">Community <span>Forums</span></h2>
+      <p class="section-desc reveal">Full forums are coming soon. For now, head to our Discord for all discussions. Here's a preview of what's planned.</p>
+
+      <div class="forums-placeholder reveal">
+        <div class="forums-header">
+          <h3>Frontline Forums</h3>
+          <span class="forum-coming">Coming Soon</span>
+        </div>
+
+        <div class="forum-category">
+          <div class="forum-cat-header">
+            <span class="forum-cat-icon">📣</span>
+            <span class="forum-cat-name">Announcements</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">Server updates, patch notes, and news</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">Staff team introductions</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="forum-category">
+          <div class="forum-cat-header">
+            <span class="forum-cat-icon">🎮</span>
+            <span class="forum-cat-name">General Discussion</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">Introductions — say hi to the community</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">PoliceRP tips and guides</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">Off-topic — general gaming chat</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="forum-category">
+          <div class="forum-cat-header">
+            <span class="forum-cat-icon">⚖</span>
+            <span class="forum-cat-name">Appeals & Reports</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">Ban appeals</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">Player reports</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="forum-category">
+          <div class="forum-cat-header">
+            <span class="forum-cat-icon">💡</span>
+            <span class="forum-cat-name">Suggestions</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">Server feature suggestions</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+          <div class="forum-row">
+            <span class="forum-row-title">Vote on upcoming game modes</span>
+            <span class="forum-row-meta forum-coming">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:1.25rem;font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;color:rgba(200,205,216,0.3);text-align:center;text-transform:uppercase;">
+        For now, all community discussion lives in our Discord — <a href="https://discord.gg/7fahT24btF" target="_blank" style="color:var(--fl-red);text-decoration:none;">discord.gg/7fahT24btF</a>
+      </p>
+    </div>
+
+  </div>
+
+  <footer>
+    <a class="footer-logo" href="../index.html">FRONTLINE <span>NETX</span></a>
+    <p class="footer-copy">© 2025 Frontline Networks — All rights reserved</p>
+    <ul class="footer-links">
+      <li><a href="https://discord.gg/7fahT24btF" target="_blank">Discord</a></li>
+      <li><a href="servers.html">Servers</a></li>
+      <li><a href="store.html">Store</a></li>
+    </ul>
+  </footer>
+
+</div>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

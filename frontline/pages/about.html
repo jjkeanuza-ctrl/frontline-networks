@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontline Networks – About</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .offer-card {
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-radius: 6px;
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .offer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--fl-red), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .offer-card:hover { border-color: rgba(232,36,46,0.55); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 18px rgba(232,36,46,0.1); }
+    .offer-card:hover::before { opacity: 1; }
+
+    .offer-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+
+    .offer-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--fl-white);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.65rem;
+    }
+
+    .offer-text { font-size: 0.98rem; line-height: 1.65; color: var(--fl-text); }
+
+    .mission-block {
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-left: 3px solid var(--fl-red);
+      border-radius: 0 6px 6px 0;
+      padding: 2rem 2rem 2rem 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .mission-block p {
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: var(--fl-text);
+      font-style: italic;
+    }
+
+    .mission-block p + p { margin-top: 1rem; }
+
+    .rules-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .rules-list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--fl-text);
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-radius: 5px;
+      padding: 1rem 1.25rem;
+    }
+
+    .rule-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--fl-red);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="bg-overlay"></div>
+<div class="grid-lines"></div>
+
+<div class="site-wrap">
+
+  <nav>
+    <a class="nav-logo" href="../index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fl-red)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      FRONTLINE <span class="logo-accent">NETX</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="servers.html">Servers</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="nav-cta">Join Now</a></li>
+    </ul>
+  </nav>
+
+  <div class="live-ticker" style="margin-top:68px">
+    <div class="ticker-inner">
+      <span class="ticker-item">📡 About Frontline Networks</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">👥 Players: <span data-server-players>0</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">📡 About Frontline Networks</span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">👥 Players: <span data-server-players>0</span></span>
+    </div>
+  </div>
+
+  <div class="page-header">
+    <p class="page-eyebrow">// Who We Are</p>
+    <h1 class="page-title">About <span>Frontline</span></h1>
+    <p class="page-desc">Built by gamers who wanted something better — a community that puts the player experience first, always.</p>
+  </div>
+
+  <div class="section" style="padding-top:0">
+
+    <!-- MISSION -->
+    <p class="section-label reveal">// Our Mission</p>
+    <div class="mission-block reveal">
+      <p>Frontline Networks was founded with one goal: build the gaming community we always wished existed. No pay-to-win. No toxic gatekeeping. Just high-quality servers, fair moderation, and a place where every player — new or veteran — feels genuinely welcome.</p>
+      <p>We believe roleplay is at its best when the environment is stable, the rules are clear, and the staff actually care. That's what we're building here, one server at a time.</p>
+    </div>
+
+    <!-- WHAT WE OFFER -->
+    <p class="section-label reveal">// What We Offer</p>
+    <h2 class="section-title reveal">Built for the <span>Frontline</span></h2>
+    <div class="offer-grid" style="margin-bottom:3.5rem">
+      <div class="offer-card reveal">
+        <span class="offer-icon">⚡</span>
+        <div class="offer-title">High-Performance Servers</div>
+        <p class="offer-text">Optimised hardware running 24/7 with near-zero downtime. Smooth gameplay and consistent low ping — always.</p>
+      </div>
+      <div class="offer-card reveal">
+        <span class="offer-icon">🛡</span>
+        <div class="offer-title">Active Staff & Moderation</div>
+        <p class="offer-text">Our admin team keeps every server fair and drama-free. Reports are handled fast — your experience matters.</p>
+      </div>
+      <div class="offer-card reveal">
+        <span class="offer-icon">🎭</span>
+        <div class="offer-title">Immersive Roleplay</div>
+        <p class="offer-text">Custom scripts, realistic systems, and deep lore designed to pull you in. This isn't just a game — it's a world.</p>
+      </div>
+      <div class="offer-card reveal">
+        <span class="offer-icon">🏆</span>
+        <div class="offer-title">Rank & Progression</div>
+        <p class="offer-text">Earn your way through ranks with in-game progression, job advancement, and community recognition.</p>
+      </div>
+      <div class="offer-card reveal">
+        <span class="offer-icon">💬</span>
+        <div class="offer-title">Welcoming Community</div>
+        <p class="offer-text">New player or veteran — you're welcome here. Active Discord, regular events, and good vibes all around.</p>
+      </div>
+      <div class="offer-card reveal">
+        <span class="offer-icon">🔧</span>
+        <div class="offer-title">Regular Updates</div>
+        <p class="offer-text">We listen. New content, QoL changes, and community-voted features roll out regularly — always improving.</p>
+      </div>
+    </div>
+
+    <!-- GROUND RULES -->
+    <div class="divider"></div>
+    <div style="margin-top:3rem">
+      <p class="section-label reveal">// Ground Rules</p>
+      <h2 class="section-title reveal">How We <span>Operate</span></h2>
+      <p class="section-desc reveal">A few non-negotiables that keep Frontline Networks a great place for everyone.</p>
+      <ul class="rules-list">
+        <li class="reveal"><span class="rule-num">[01]</span> Respect every player regardless of rank, role, or experience level.</li>
+        <li class="reveal"><span class="rule-num">[02]</span> No cheating, hacking, exploiting bugs, or using third-party tools to gain an advantage.</li>
+        <li class="reveal"><span class="rule-num">[03]</span> Roleplay seriously — RDM, NLR breaks, and metagaming are not tolerated.</li>
+        <li class="reveal"><span class="rule-num">[04]</span> Follow staff instructions. If you believe a decision is wrong, appeal it — don't argue in-game.</li>
+        <li class="reveal"><span class="rule-num">[05]</span> Keep chat and voice comms clean. Hate speech, slurs, and harassment will result in a permanent ban.</li>
+        <li class="reveal"><span class="rule-num">[06]</span> Have fun — that's what this is all for.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    <a class="footer-logo" href="../index.html">FRONTLINE <span>NETX</span></a>
+    <p class="footer-copy">© 2025 Frontline Networks — All rights reserved</p>
+    <ul class="footer-links">
+      <li><a href="https://discord.gg/7fahT24btF" target="_blank">Discord</a></li>
+      <li><a href="servers.html">Servers</a></li>
+      <li><a href="store.html">Store</a></li>
+    </ul>
+  </footer>
+
+</div>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

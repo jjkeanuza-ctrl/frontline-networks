@@ -540,199 +540,14 @@
     .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.55s ease,transform 0.55s ease; }
     .reveal.in { opacity:1; transform:none; }
 
-    /* ══════════════════════════════════════
-       HAMBURGER MENU
-    ══════════════════════════════════════ */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 6px;
-      z-index: 200;
-    }
-
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--fl-white);
-      border-radius: 2px;
-      transition: transform 0.3s, opacity 0.3s;
-    }
-
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* Mobile nav drawer */
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      top: 68px; left: 0; right: 0;
-      background: rgba(6,12,20,0.98);
-      border-bottom: 1px solid var(--fl-border);
-      backdrop-filter: blur(16px);
-      z-index: 99;
-      flex-direction: column;
-      padding: 1rem 0 1.5rem;
-      transform: translateY(-10px);
-      opacity: 0;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-    }
-
-    .mobile-nav.open {
-      display: flex;
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .mobile-nav button {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      font-size: 1.05rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--fl-text);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.9rem 2rem;
-      text-align: left;
-      transition: color 0.2s, background 0.2s;
-      border-left: 2px solid transparent;
-    }
-
-    .mobile-nav button:hover,
-    .mobile-nav button.active {
-      color: var(--fl-white);
-      background: rgba(79,195,247,0.06);
-      border-left-color: var(--fl-blue);
-    }
-
-    .mobile-nav .mobile-cta {
-      margin: 0.75rem 2rem 0;
-      background: var(--fl-blue);
-      color: #021824;
-      font-weight: 700;
-      padding: 0.85rem 1.5rem;
-      border-radius: 4px;
-      text-align: center;
-      border-left: none !important;
-    }
-
-    .mobile-nav .mobile-cta:hover {
-      background: var(--fl-blue-dark);
-      color: var(--fl-white);
-    }
-
-    /* ══════════════════════════════════════
-       FULL RESPONSIVE BREAKPOINTS
-    ══════════════════════════════════════ */
-
-    /* ── Tablet (≤900px) ── */
-    @media (max-width: 900px) {
-      .card-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-      .store-grid { grid-template-columns: 1fr 1fr; }
-      .comm-grid  { grid-template-columns: 1fr 1fr; }
-      .cat-grid   { grid-template-columns: 1fr 1fr; }
-      .server-stats-row { grid-template-columns: repeat(2, 1fr); }
-      .stats-bar { max-width: 100%; }
-    }
-
-    /* ── Mobile (≤768px) ── */
-    @media (max-width: 768px) {
-
-      /* Nav — hide desktop links, show hamburger */
-      nav { padding: 0 1.25rem; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-
-      /* Hero */
-      #view-home {
-        padding: 4rem 1.25rem 3rem;
-        min-height: calc(100vh - 100px);
-      }
-
-      .hero-title { font-size: clamp(2.4rem, 13vw, 4rem); }
-      .hero-sub { font-size: 0.95rem; letter-spacing: 0.18em; }
-      .hero-desc { font-size: 1rem; }
-      .hero-btns { flex-direction: column; align-items: center; width: 100%; }
-      .hero-btns .btn { width: 100%; max-width: 320px; text-align: center; }
-
-      /* Stats bar — 2x2 grid on mobile */
-      .stats-bar {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        width: 100%;
-        margin-top: 2.5rem;
-      }
-
-      .stat-item { border-right: 1px solid var(--fl-border); border-bottom: 1px solid var(--fl-border); }
-      .stat-item:nth-child(2) { border-right: none; }
-      .stat-item:nth-child(3) { border-bottom: none; }
-      .stat-item:nth-child(4) { border-right: none; border-bottom: none; }
-
-      /* Page wrap */
-      .page-wrap { padding: 2.5rem 1.25rem 4rem; }
-
-      /* Page title */
-      .page-title { font-size: clamp(1.6rem, 8vw, 2.4rem); }
-
-      /* Grids — single column */
-      .card-grid  { grid-template-columns: 1fr; }
-      .store-grid { grid-template-columns: 1fr; }
-      .comm-grid  { grid-template-columns: 1fr; }
-      .cat-grid   { grid-template-columns: 1fr; }
-
-      /* Server card */
-      .server-banner { flex-direction: column; gap: 1.25rem; padding: 1.75rem 1.25rem; }
-      .server-stats-row { grid-template-columns: 1fr 1fr; }
-      .stat-cell { border-right: 1px solid var(--fl-border); border-bottom: 1px solid var(--fl-border); }
-      .stat-cell:nth-child(2) { border-right: none; }
-      .stat-cell:nth-child(3) { border-bottom: none; }
-      .stat-cell:nth-child(4) { border-right: none; border-bottom: none; }
-
-      /* Coming panel */
-      .coming-panel { padding: 2rem 1.25rem; }
-      .coming-games { gap: 0.6rem; }
-      .coming-game { font-size: 0.85rem; padding: 0.5rem 1rem; }
-      .notify-row { flex-direction: column; }
-      .notify-input, .notify-btn { width: 100%; }
-
-      /* Store featured badge */
-      .store-card.featured { margin-top: 1rem; }
-
-      /* Forums */
-      .forum-row { padding: 0.85rem 1.25rem; }
-      .forums-hdr { padding: 1rem 1.25rem; }
-      .forum-cat-hdr { padding: 0.85rem 1.25rem; }
-
-      /* Footer */
-      footer {
-        flex-direction: column;
-        text-align: center;
-        padding: 2rem 1.25rem;
-        gap: 1rem;
-      }
-
-      .footer-links { justify-content: center; flex-wrap: wrap; gap: 1rem; }
-
-      /* Mission block */
-      .mission-block { padding: 1.5rem 1.25rem; }
-
-      /* Ticker font */
-      .ticker-item { font-size: 0.62rem; letter-spacing: 0.14em; }
-    }
-
-    /* ── Small mobile (≤400px) ── */
-    @media (max-width: 400px) {
-      .hero-title { font-size: 2.2rem; }
-      .page-title { font-size: 1.5rem; }
-      .game-badge { width: 72px; height: 72px; }
-      .game-badge-icon { font-size: 1.6rem; }
+    /* ── MOBILE ── */
+    @media(max-width:768px){
+      nav { padding:0 1.25rem; }
+      .nav-links { gap:0; }
+      .nav-links button { font-size:0.78rem; padding:0.35rem 0.5rem; }
+      footer { flex-direction:column; text-align:center; }
+      .page-wrap { padding:3rem 1.25rem 4rem; }
+      .server-banner { flex-direction:column; gap:1.25rem; }
     }
   </style>
 </head>
@@ -758,21 +573,7 @@
       <li><button onclick="showView('community')" id="nav-community">Community</button></li>
       <li><button class="nav-cta" onclick="window.open('https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select','_blank')">Join Now</button></li>
     </ul>
-    <!-- Hamburger for mobile -->
-    <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMobileNav()">
-      <span></span><span></span><span></span>
-    </button>
   </nav>
-
-  <!-- ── MOBILE NAV DRAWER ── -->
-  <div class="mobile-nav" id="mobile-nav">
-    <button onclick="mobileNav('home')">Home</button>
-    <button onclick="mobileNav('about')">About</button>
-    <button onclick="mobileNav('servers')">Servers</button>
-    <button onclick="mobileNav('store')">Store</button>
-    <button onclick="mobileNav('community')">Community</button>
-    <button class="mobile-cta" onclick="window.open('https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select','_blank');closeMobileNav();">🎮 Join Now — Sign in with Steam</button>
-  </div>
 
   <!-- ── TICKER ── -->
   <div class="live-ticker">
@@ -1109,33 +910,6 @@
 </div><!-- /site-wrap -->
 
 <script>
-/* ── MOBILE NAV ── */
-function toggleMobileNav() {
-  const drawer = document.getElementById('mobile-nav');
-  const burger = document.getElementById('hamburger');
-  drawer.classList.toggle('open');
-  burger.classList.toggle('open');
-}
-
-function closeMobileNav() {
-  document.getElementById('mobile-nav').classList.remove('open');
-  document.getElementById('hamburger').classList.remove('open');
-}
-
-function mobileNav(view) {
-  showView(view);
-  closeMobileNav();
-}
-
-// Close drawer when clicking outside
-document.addEventListener('click', e => {
-  const drawer = document.getElementById('mobile-nav');
-  const burger = document.getElementById('hamburger');
-  if (drawer.classList.contains('open') && !drawer.contains(e.target) && !burger.contains(e.target)) {
-    closeMobileNav();
-  }
-});
-
 /* ── VIEW ROUTER ── */
 const views = ['home','about','servers','store','community'];
 
