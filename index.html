@@ -3,143 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frontline Networks – Gaming Community</title>
+  <title>Frontline Networks – Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --fl-red: #e8242e;
-      --fl-red-dark: #a5161e;
-      --fl-red-glow: rgba(232, 36, 46, 0.5);
-      --fl-gold: #f5a623;
-      --fl-dark: #080a0e;
-      --fl-panel: rgba(10, 14, 22, 0.85);
-      --fl-border: rgba(232, 36, 46, 0.3);
-      --fl-text: #c8cdd8;
-      --fl-white: #eef0f4;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Rajdhani', sans-serif;
-      background: var(--fl-dark);
-      color: var(--fl-text);
-      overflow-x: hidden;
-    }
-
-    /* ── BACKGROUND ── */
-    #bg-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .bg-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232,36,46,0.12) 0%, transparent 70%),
-        linear-gradient(to bottom, rgba(8,10,14,0.55) 0%, rgba(8,10,14,0.75) 60%, rgba(8,10,14,0.97) 100%);
-      pointer-events: none;
-    }
-
-    /* ── GRID LINES ── */
-    .grid-lines {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(232,36,46,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(232,36,46,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    /* ── CONTENT WRAPPER ── */
-    .site-wrap { position: relative; z-index: 2; }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 3rem;
-      height: 68px;
-      background: rgba(8,10,14,0.92);
-      border-bottom: 1px solid var(--fl-border);
-      backdrop-filter: blur(12px);
-    }
-
-    .nav-logo {
-      font-family: 'Orbitron', monospace;
-      font-weight: 900;
-      font-size: 1.1rem;
-      color: var(--fl-white);
-      letter-spacing: 0.08em;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-logo .logo-accent { color: var(--fl-red); }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--fl-text);
-      text-decoration: none;
-      transition: color 0.2s;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0; right: 100%;
-      height: 1px;
-      background: var(--fl-red);
-      transition: right 0.25s ease;
-    }
-
-    .nav-links a:hover { color: var(--fl-white); }
-    .nav-links a:hover::after { right: 0; }
-
-    .nav-cta {
-      background: var(--fl-red);
-      color: var(--fl-white) !important;
-      padding: 0.4rem 1.2rem;
-      border-radius: 3px;
-      font-weight: 700 !important;
-      transition: background 0.2s, box-shadow 0.2s !important;
-    }
-
-    .nav-cta:hover {
-      background: var(--fl-red-dark) !important;
-      box-shadow: 0 0 18px var(--fl-red-glow) !important;
-    }
-
-    .nav-cta::after { display: none !important; }
-
-    /* ── HERO ── */
+    /* ── HOME ONLY STYLES ── */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -148,12 +18,13 @@
       justify-content: center;
       text-align: center;
       padding: 6rem 2rem 4rem;
+      position: relative;
     }
 
     .hero-eyebrow {
       font-family: 'Share Tech Mono', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
+      font-size: 0.78rem;
+      letter-spacing: 0.32em;
       color: var(--fl-red);
       text-transform: uppercase;
       margin-bottom: 1.5rem;
@@ -168,12 +39,11 @@
       line-height: 1;
       color: var(--fl-white);
       text-transform: uppercase;
-      letter-spacing: -0.01em;
       opacity: 0;
       animation: fadeUp 0.7s 0.4s forwards;
     }
 
-    .hero-title .wave-text {
+    .wave-text {
       display: inline-block;
       background: linear-gradient(90deg, var(--fl-red), var(--fl-gold), var(--fl-red));
       background-size: 200% auto;
@@ -183,28 +53,24 @@
       animation: shimmer 3s linear infinite;
     }
 
-    @keyframes shimmer {
-      to { background-position: 200% center; }
-    }
+    @keyframes shimmer { to { background-position: 200% center; } }
 
     .hero-sub {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 300;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(200, 205, 216, 0.7);
+      color: rgba(200,205,216,0.6);
       margin-top: 1rem;
       opacity: 0;
       animation: fadeUp 0.7s 0.6s forwards;
     }
 
     .hero-desc {
-      max-width: 560px;
-      margin: 2rem auto 0;
+      max-width: 540px;
+      margin: 1.75rem auto 0;
       font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--fl-text);
+      line-height: 1.75;
       opacity: 0;
       animation: fadeUp 0.7s 0.8s forwards;
     }
@@ -214,55 +80,11 @@
       gap: 1rem;
       margin-top: 2.5rem;
       justify-content: center;
+      flex-wrap: wrap;
       opacity: 0;
       animation: fadeUp 0.7s 1s forwards;
     }
 
-    .btn-primary {
-      background: var(--fl-red);
-      color: var(--fl-white);
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.85rem 2.2rem;
-      border-radius: 3px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
-    }
-
-    .btn-primary:hover {
-      background: var(--fl-red-dark);
-      box-shadow: 0 0 28px var(--fl-red-glow), 0 4px 20px rgba(0,0,0,0.4);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--fl-white);
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.85rem 2.2rem;
-      border-radius: 3px;
-      text-decoration: none;
-      border: 1px solid rgba(232,36,46,0.4);
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, transform 0.15s;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--fl-red);
-      background: rgba(232,36,46,0.08);
-      transform: translateY(-2px);
-    }
-
-    /* ── SCROLL INDICATOR ── */
     .scroll-hint {
       position: absolute;
       bottom: 2.5rem;
@@ -273,83 +95,88 @@
       align-items: center;
       gap: 6px;
       font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.25em;
-      color: rgba(200,205,216,0.35);
+      color: rgba(200,205,216,0.28);
       text-transform: uppercase;
       animation: bob 2s ease-in-out infinite;
     }
 
-    .scroll-hint svg { opacity: 0.5; }
-
     @keyframes bob {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
+      50% { transform: translateX(-50%) translateY(7px); }
     }
 
-    /* ── SECTIONS ── */
-    section {
-      padding: 5rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .section-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--fl-red);
-      margin-bottom: 0.75rem;
-    }
-
-    .section-title {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      color: var(--fl-white);
-      text-transform: uppercase;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-
-    .section-title span { color: var(--fl-red); }
-
-    .section-desc {
-      font-size: 1.1rem;
-      line-height: 1.75;
-      color: var(--fl-text);
-      max-width: 640px;
-      margin-bottom: 3rem;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--fl-border), transparent);
-    }
-
-    /* ── WHAT WE OFFER ── */
-    .offer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .offer-card {
+    /* ── QUICK STATS BAR ── */
+    .stats-bar {
       background: var(--fl-panel);
       border: 1px solid var(--fl-border);
-      border-radius: 6px;
-      padding: 2rem 1.5rem;
-      position: relative;
+      border-radius: 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0;
+      margin: 0 2rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
       overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
 
-    .offer-card::before {
+    .stats-bar-item {
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      border-right: 1px solid var(--fl-border);
+    }
+
+    .stats-bar-item:last-child { border-right: none; }
+
+    .stats-bar-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--fl-red);
+      display: block;
+    }
+
+    .stats-bar-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: rgba(200,205,216,0.4);
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+      display: block;
+    }
+
+    /* ── QUICK NAV CARDS ── */
+    .quicknav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .qcard {
+      background: var(--fl-panel);
+      border: 1px solid var(--fl-border);
+      border-radius: 8px;
+      padding: 2rem 1.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qcard::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -359,673 +186,43 @@
       transition: opacity 0.3s;
     }
 
-    .offer-card:hover {
-      border-color: rgba(232,36,46,0.6);
+    .qcard:hover {
+      border-color: rgba(232,36,46,0.55);
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(232,36,46,0.1);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 18px rgba(232,36,46,0.1);
     }
 
-    .offer-card:hover::before { opacity: 1; }
+    .qcard:hover::before { opacity: 1; }
 
-    .offer-icon {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
+    .qcard-icon { font-size: 2rem; }
 
-    .offer-title {
+    .qcard-title {
       font-family: 'Orbitron', monospace;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: var(--fl-white);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.75rem;
+      letter-spacing: 0.07em;
     }
 
-    .offer-text {
-      font-size: 1rem;
-      line-height: 1.65;
-      color: var(--fl-text);
-    }
-
-    /* ── SERVERS ── */
-    #servers { padding-top: 0; }
-
-    .server-hero {
-      background: var(--fl-panel);
-      border: 1px solid var(--fl-border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 2rem;
-    }
-
-    .server-hero-banner {
-      background: linear-gradient(135deg, #0d1117 0%, #1a0408 50%, #0d1117 100%);
-      padding: 3rem 2.5rem 2.5rem;
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-      gap: 2.5rem;
-      border-bottom: 1px solid var(--fl-border);
-    }
-
-    .game-badge {
-      flex-shrink: 0;
-      width: 100px;
-      height: 100px;
-      background: rgba(232,36,46,0.12);
-      border: 2px solid var(--fl-red);
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .game-badge-icon { font-size: 2.2rem; }
-
-    .game-badge-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--fl-red);
-      text-transform: uppercase;
-    }
-
-    .server-hero-info { flex: 1; }
-
-    .server-game-name {
-      font-family: 'Orbitron', monospace;
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--fl-white);
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-
-    .server-game-name span { color: var(--fl-red); }
-
-    .server-tag-row {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-
-    .tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.75rem;
-      border-radius: 3px;
-      border: 1px solid;
-    }
-
-    .tag-red { color: var(--fl-red); border-color: rgba(232,36,46,0.4); background: rgba(232,36,46,0.08); }
-    .tag-gold { color: var(--fl-gold); border-color: rgba(245,166,35,0.4); background: rgba(245,166,35,0.08); }
-    .tag-green { color: #4ade80; border-color: rgba(74,222,128,0.4); background: rgba(74,222,128,0.08); }
-
-    .server-desc {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--fl-text);
-      max-width: 560px;
-    }
-
-    .server-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      padding: 1.5rem 2.5rem;
-      gap: 1rem;
-    }
-
-    .stat-item { text-align: center; }
-
-    .stat-value {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--fl-red);
-      display: block;
-    }
-
-    .stat-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: rgba(200,205,216,0.5);
-      text-transform: uppercase;
-      margin-top: 0.25rem;
-      display: block;
-    }
-
-    /* ── CATEGORY CARDS ── */
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-
-    .cat-card {
-      background: var(--fl-panel);
-      border: 1px solid var(--fl-border);
-      border-radius: 6px;
-      padding: 1.75rem;
-      display: flex;
-      gap: 1.25rem;
-      align-items: flex-start;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      cursor: default;
-    }
-
-    .cat-card:hover {
-      border-color: rgba(232,36,46,0.5);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.35), 0 0 15px rgba(232,36,46,0.08);
-    }
-
-    .cat-icon {
-      width: 52px;
-      height: 52px;
-      flex-shrink: 0;
-      background: rgba(232,36,46,0.1);
-      border: 1px solid rgba(232,36,46,0.3);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-    }
-
-    .cat-info { flex: 1; }
-
-    .cat-name {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--fl-white);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.4rem;
-    }
-
-    .cat-desc {
+    .qcard-desc {
       font-size: 0.95rem;
       line-height: 1.6;
       color: var(--fl-text);
     }
 
-    .cat-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 0.6rem;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-
-    .dot-live { background: #4ade80; box-shadow: 0 0 6px #4ade80; }
-    .dot-soon { background: var(--fl-gold); box-shadow: 0 0 6px var(--fl-gold); }
-
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    .status-live { color: #4ade80; }
-    .status-soon { color: var(--fl-gold); }
-
-    /* ── COMING SOON ── */
-    #coming-soon {
-      padding-top: 0;
-    }
-
-    .coming-banner {
-      background: linear-gradient(135deg, rgba(245,166,35,0.04) 0%, var(--fl-panel) 50%, rgba(245,166,35,0.04) 100%);
-      border: 1px solid rgba(245,166,35,0.2);
-      border-radius: 8px;
-      padding: 3rem 2.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .coming-banner::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--fl-gold), transparent);
-    }
-
-    .coming-badge {
-      display: inline-block;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--fl-gold);
-      background: rgba(245,166,35,0.1);
-      border: 1px solid rgba(245,166,35,0.3);
-      padding: 0.35rem 1rem;
-      border-radius: 3px;
-      margin-bottom: 1.5rem;
-    }
-
-    .coming-title {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
-      font-weight: 700;
-      color: var(--fl-white);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .coming-text {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--fl-text);
-      max-width: 600px;
-      margin: 0 auto 2.5rem;
-    }
-
-    .coming-games {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
-
-    .coming-game {
-      background: rgba(245,166,35,0.07);
-      border: 1px solid rgba(245,166,35,0.2);
-      border-radius: 5px;
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-      color: rgba(200,205,216,0.7);
-      text-transform: uppercase;
-    }
-
-    .coming-game-icon { font-size: 1.4rem; }
-
-    /* ── NOTIFY FORM ── */
-    .notify-form {
-      display: flex;
-      gap: 0.75rem;
-      max-width: 420px;
-      margin: 0 auto;
-      justify-content: center;
-    }
-
-    .notify-input {
-      flex: 1;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 3px;
-      padding: 0.75rem 1rem;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      color: var(--fl-white);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .notify-input::placeholder { color: rgba(200,205,216,0.35); }
-    .notify-input:focus { border-color: rgba(245,166,35,0.5); }
-
-    .notify-btn {
-      background: var(--fl-gold);
-      color: #1a0e00;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-      white-space: nowrap;
-    }
-
-    .notify-btn:hover {
-      background: #e0941a;
-      box-shadow: 0 0 20px rgba(245,166,35,0.4);
-    }
-
-    /* ── COMMUNITY / JOIN ── */
-    #join {
-      text-align: center;
-    }
-
-    .join-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-      margin-top: 2.5rem;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .join-card {
-      background: var(--fl-panel);
-      border: 1px solid var(--fl-border);
-      border-radius: 6px;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      text-decoration: none;
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-      display: block;
-    }
-
-    .join-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--fl-red);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(232,36,46,0.12);
-    }
-
-    .join-card-icon {
-      font-size: 2.4rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .join-card-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--fl-white);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.5rem;
-    }
-
-    .join-card-desc {
-      font-size: 0.95rem;
-      color: var(--fl-text);
-      line-height: 1.6;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--fl-border);
-      padding: 2.5rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 2;
-    }
-
-    .footer-logo {
-      font-family: 'Orbitron', monospace;
-      font-weight: 900;
-      font-size: 1rem;
-      color: var(--fl-white);
-      letter-spacing: 0.08em;
-    }
-
-    .footer-logo span { color: var(--fl-red); }
-
-    .footer-copy {
+    .qcard-arrow {
+      margin-top: auto;
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.7rem;
       letter-spacing: 0.15em;
-      color: rgba(200,205,216,0.3);
-      text-transform: uppercase;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-
-    .footer-links a {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(200,205,216,0.45);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--fl-red); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── LIVE TICKER ── */
-    .live-ticker {
-      background: rgba(232,36,46,0.08);
-      border-top: 1px solid rgba(232,36,46,0.2);
-      border-bottom: 1px solid rgba(232,36,46,0.2);
-      padding: 0.6rem 0;
-      overflow: hidden;
-      position: relative;
-      z-index: 2;
-    }
-
-    .ticker-inner {
-      display: flex;
-      white-space: nowrap;
-      animation: ticker 30s linear infinite;
-      gap: 4rem;
-    }
-
-    .ticker-item {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
       color: var(--fl-red);
-    }
-
-    .ticker-sep { color: rgba(232,36,46,0.3); }
-
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    /* ── STORE ── */
-    .store-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .store-card {
-      background: var(--fl-panel);
-      border: 1px solid var(--fl-border);
-      border-radius: 8px;
-      padding: 2rem 1.75rem;
-      position: relative;
-      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-    }
-
-    .store-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.4), 0 0 20px rgba(232,36,46,0.1);
-      border-color: rgba(232,36,46,0.5);
-    }
-
-    .store-card-featured {
-      border-color: var(--fl-red);
-      box-shadow: 0 0 30px rgba(232,36,46,0.15);
-    }
-
-    .store-featured-badge {
-      position: absolute;
-      top: -13px; left: 50%;
-      transform: translateX(-50%);
-      background: var(--fl-red);
-      color: var(--fl-white);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 0.25rem 1rem;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
-
-    .store-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.25rem;
-    }
-
-    .store-tier-icon { font-size: 1.8rem; }
-
-    .store-tier-badge {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.75rem;
-      border-radius: 3px;
-      border: 1px solid;
-    }
-
-    .store-tier-basic { color: #7eb8f7; border-color: rgba(126,184,247,0.4); background: rgba(126,184,247,0.08); }
-    .store-tier-pro { color: var(--fl-red); border-color: rgba(232,36,46,0.4); background: rgba(232,36,46,0.08); }
-    .store-tier-elite { color: var(--fl-gold); border-color: rgba(245,166,35,0.4); background: rgba(245,166,35,0.08); }
-
-    .store-card-name {
-      font-family: 'Orbitron', monospace;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--fl-white);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.4rem;
-    }
-
-    .store-card-price {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.8rem;
-      color: rgba(200,205,216,0.45);
-      letter-spacing: 0.1em;
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-    }
-
-    .store-perks {
-      list-style: none;
-      margin-bottom: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .store-perks li {
-      font-size: 0.95rem;
-      color: var(--fl-text);
-      padding-left: 0.25rem;
-    }
-
-    .store-btn {
-      display: block;
-      width: 100%;
-      text-align: center;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.8rem;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .store-btn-primary {
-      background: var(--fl-red);
-      color: var(--fl-white);
-      border: 1px solid var(--fl-red);
-    }
-
-    .store-btn-primary:hover {
-      background: var(--fl-red-dark);
-      box-shadow: 0 0 20px var(--fl-red-glow);
-    }
-
-    .store-btn-outline {
-      background: transparent;
-      color: var(--fl-white);
-      border: 1px solid rgba(232,36,46,0.35);
-    }
-
-    .store-btn-outline:hover {
-      border-color: var(--fl-red);
-      background: rgba(232,36,46,0.08);
-    }
-
-    .store-note {
-      text-align: center;
-      margin-top: 2rem;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      color: rgba(200,205,216,0.35);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 0 1.25rem; }
-      .nav-links { display: none; }
-      .server-stats { grid-template-columns: repeat(2, 1fr); }
-      .server-hero-banner { flex-direction: column; gap: 1.5rem; }
-      footer { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-<!-- ANIMATED BACKGROUND CANVAS -->
 <canvas id="bg-canvas"></canvas>
 <div class="bg-overlay"></div>
 <div class="grid-lines"></div>
@@ -1034,15 +231,16 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#hero">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fl-red)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <a class="nav-logo" href="index.html">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fl-red)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
       FRONTLINE <span class="logo-accent">NETX</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#servers">Servers</a></li>
-      <li><a href="#store">Store</a></li>
-      <li><a href="#join">Community</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="pages/about.html">About</a></li>
+      <li><a href="pages/servers.html">Servers</a></li>
+      <li><a href="pages/store.html">Store</a></li>
+      <li><a href="pages/community.html">Community</a></li>
       <li><a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="nav-cta">Join Now</a></li>
     </ul>
   </nav>
@@ -1052,35 +250,31 @@
     <div class="ticker-inner">
       <span class="ticker-item">⬛ Frontline Networks</span>
       <span class="ticker-sep">///</span>
-      <span class="ticker-item">🎮 GMOD PoliceRP — LIVE NOW</span>
+      <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">👥 Players Online: <span data-server-players>0</span></span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">⚡ More servers coming soon</span>
-      <span class="ticker-sep">///</span>
-      <span class="ticker-item">🛡 Join our community today</span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">⬛ Frontline Networks</span>
       <span class="ticker-sep">///</span>
-      <span class="ticker-item">🎮 GMOD PoliceRP — LIVE NOW</span>
+      <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
+      <span class="ticker-sep">///</span>
+      <span class="ticker-item">👥 Players Online: <span data-server-players>0</span></span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">⚡ More servers coming soon</span>
-      <span class="ticker-sep">///</span>
-      <span class="ticker-item">🛡 Join our community today</span>
     </div>
   </div>
 
   <!-- HERO -->
   <section id="hero" style="max-width:100%">
     <p class="hero-eyebrow">// Est. 2025 — Gaming Community</p>
-    <h1 class="hero-title">
-      <span class="wave-text">Frontline</span><br>Networks
-    </h1>
+    <h1 class="hero-title"><span class="wave-text">Frontline</span><br>Networks</h1>
     <p class="hero-sub">Where Roleplay Meets Realism</p>
-    <p class="hero-desc">
-      A dedicated gaming network built by players, for players. Immersive roleplay experiences, active staff, and a community that always has your six.
-    </p>
+    <p class="hero-desc">A dedicated gaming network built by players, for players. Immersive roleplay, active staff, and a community that always has your six.</p>
     <div class="hero-btns">
-      <a href="#servers" class="btn-primary">View Servers</a>
-      <a href="#join" class="btn-secondary">Join Community</a>
+      <a href="pages/servers.html" class="btn-primary">View Servers</a>
+      <a href="pages/community.html" class="btn-secondary">Join Community</a>
     </div>
     <div class="scroll-hint">
       <svg width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="1" width="12" height="18" rx="6"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
@@ -1088,360 +282,78 @@
     </div>
   </section>
 
-  <!-- ABOUT / WHAT WE OFFER -->
-  <div class="divider"></div>
-  <section id="about">
-    <p class="section-label reveal">// 01 — What We Offer</p>
-    <h2 class="section-title reveal">Built for the <span>Frontline</span></h2>
-    <p class="section-desc reveal">Everything you need for a premium gaming experience — from stable, low-latency servers to a friendly, active community.</p>
-
-    <div class="offer-grid">
-      <div class="offer-card reveal">
-        <span class="offer-icon">⚡</span>
-        <div class="offer-title">High-Performance Servers</div>
-        <p class="offer-text">Optimised hardware running 24/7 with near-zero downtime. Expect smooth gameplay and consistent low ping so you never miss a moment.</p>
+  <!-- LIVE STATS BAR -->
+  <div style="max-width:1200px;margin:0 auto;padding:0 2rem 3rem;">
+    <div class="stats-bar reveal">
+      <div class="stats-bar-item">
+        <span class="stats-bar-value" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+          <span class="status-dot dot-offline" data-status-dot></span>
+          <span data-server-status>Offline</span>
+        </span>
+        <span class="stats-bar-label">Server Status</span>
       </div>
-      <div class="offer-card reveal">
-        <span class="offer-icon">🛡</span>
-        <div class="offer-title">Active Staff & Moderation</div>
-        <p class="offer-text">Our dedicated admin team keeps every server fair, clean, and drama-free. Reports are handled fast — your experience matters.</p>
+      <div class="stats-bar-item">
+        <span class="stats-bar-value"><span data-server-players>0</span> / <span data-server-maxplayers>0</span></span>
+        <span class="stats-bar-label">Players Online</span>
       </div>
-      <div class="offer-card reveal">
-        <span class="offer-icon">🎭</span>
-        <div class="offer-title">Immersive Roleplay</div>
-        <p class="offer-text">Custom scripts, in-depth lore, and realistic systems designed to pull you deep into the roleplay. This isn't just a game — it's a world.</p>
+      <div class="stats-bar-item">
+        <span class="stats-bar-value">GMOD</span>
+        <span class="stats-bar-label">Current Game</span>
       </div>
-      <div class="offer-card reveal">
-        <span class="offer-icon">🏆</span>
-        <div class="offer-title">Rank & Progression</div>
-        <p class="offer-text">Earn your way through ranks with in-game progression, job advancement, and community recognition. There's always a next level.</p>
-      </div>
-      <div class="offer-card reveal">
-        <span class="offer-icon">💬</span>
-        <div class="offer-title">Friendly Community</div>
-        <p class="offer-text">New player or veteran, you're welcome here. Join our Discord for events, help, and good vibes around the clock.</p>
-      </div>
-      <div class="offer-card reveal">
-        <span class="offer-icon">🔧</span>
-        <div class="offer-title">Regular Updates</div>
-        <p class="offer-text">We listen. New content, QoL changes, and community-voted features roll out regularly — always improving, never standing still.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVERS -->
-  <div class="divider"></div>
-  <section id="servers">
-    <p class="section-label reveal">// 02 — Our Servers</p>
-    <h2 class="section-title reveal">Live <span>Now</span></h2>
-    <p class="section-desc reveal">Currently hosting one flagship server with more on the way. Jump in and experience what Frontline Networks is all about.</p>
-
-    <!-- GMOD CARD -->
-    <div class="server-hero reveal">
-      <div class="server-hero-banner">
-        <div class="game-badge">
-          <span class="game-badge-icon">🔫</span>
-          <span class="game-badge-label">GMOD</span>
-        </div>
-        <div class="server-hero-info">
-          <h3 class="server-game-name">Garry's <span>Mod</span></h3>
-          <div class="server-tag-row">
-            <span class="tag tag-green">● Live</span>
-            <span class="tag tag-red">PoliceRP</span>
-            <span class="tag tag-gold">Roleplay</span>
-          </div>
-          <p class="server-desc">Step into a living, breathing city where law enforcement meets criminal underworld. Take the badge as a cop, rise through the ranks, investigate crimes — or choose a different path entirely. Deep mechanics, active staff, and a community that takes roleplay seriously.</p>
-        </div>
-      </div>
-      <div class="server-stats">
-        <div class="stat-item">
-          <span class="stat-value">24/7</span>
-          <span class="stat-label">Uptime</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-value">PoliceRP</span>
-          <span class="stat-label">Mode</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-value">Active</span>
-          <span class="stat-label">Staff Team</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-value">Free</span>
-          <span class="stat-label">To Join</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CATEGORY CARDS -->
-    <p class="section-label reveal" style="margin-top:2.5rem">// Categories Available</p>
-    <div class="category-grid">
-      <div class="cat-card reveal">
-        <div class="cat-icon">👮</div>
-        <div class="cat-info">
-          <div class="cat-name">PoliceRP</div>
-          <p class="cat-desc">Patrol the streets, respond to calls, make arrests, and uphold the law. Multiple police ranks with real progression.</p>
-          <span class="cat-status">
-            <span class="status-dot dot-live"></span>
-            <span class="status-live">Live Now</span>
-          </span>
-        </div>
-      </div>
-      <div class="cat-card reveal">
-        <div class="cat-icon">🏙</div>
-        <div class="cat-info">
-          <div class="cat-name">Civilian Life</div>
-          <p class="cat-desc">Run businesses, own property, build a reputation. Life in the city is what you make it.</p>
-          <span class="cat-status">
-            <span class="status-dot dot-live"></span>
-            <span class="status-live">Live Now</span>
-          </span>
-        </div>
-      </div>
-      <div class="cat-card reveal">
-        <div class="cat-icon">🔪</div>
-        <div class="cat-info">
-          <div class="cat-name">Criminal Factions</div>
-          <p class="cat-desc">Join or build criminal organisations, pull off heists, and evade the long arm of the law.</p>
-          <span class="cat-status">
-            <span class="status-dot dot-live"></span>
-            <span class="status-live">Live Now</span>
-          </span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMING SOON — built into Servers -->
-  <div style="max-width:1200px;margin:0 auto;padding:0 2rem 2rem;">
-    <p class="section-label reveal" style="margin-top:3rem">// Coming Soon — More Servers</p>
-    <div class="coming-banner reveal">
-      <div class="coming-badge">🚧 In Development</div>
-      <h3 class="coming-title">New Servers on the Horizon</h3>
-      <p class="coming-text">
-        We're actively building and testing new server environments. Sign up to be first to know when they go live — early members get priority access and exclusive in-game perks.
-      </p>
-      <div class="coming-games">
-        <div class="coming-game"><span class="coming-game-icon">🪖</span> DarkRP</div>
-        <div class="coming-game"><span class="coming-game-icon">🚀</span> Space-RP</div>
-        <div class="coming-game"><span class="coming-game-icon">🏝</span> SCP-RP</div>
-        <div class="coming-game"><span class="coming-game-icon">🎮</span> More TBA</div>
-      </div>
-      <div class="notify-form">
-        <input class="notify-input" type="email" placeholder="your@email.com" />
-        <button class="notify-btn" onclick="this.textContent='✓ Noted!'">Notify Me</button>
+      <div class="stats-bar-item">
+        <span class="stats-bar-value">PoliceRP</span>
+        <span class="stats-bar-label">Active Mode</span>
       </div>
     </div>
   </div>
 
-  <!-- STORE -->
+  <!-- QUICK NAV -->
   <div class="divider"></div>
-  <section id="store">
-    <p class="section-label reveal">// 03 — Store</p>
-    <h2 class="section-title reveal">Frontline <span>Store</span></h2>
-    <p class="section-desc reveal">Support the network and unlock exclusive perks, ranks, and cosmetics. Every purchase keeps our servers running and growing.</p>
-
-    <div class="store-grid">
-      <div class="store-card reveal">
-        <div class="store-card-header">
-          <span class="store-tier-icon">⭐</span>
-          <div class="store-tier-badge store-tier-basic">Basic</div>
-        </div>
-        <div class="store-card-name">Recruit Package</div>
-        <div class="store-card-price">Coming Soon</div>
-        <ul class="store-perks">
-          <li>✔ Custom name colour</li>
-          <li>✔ Donor tag in-game</li>
-          <li>✔ Priority queue</li>
-          <li>✔ Discord role</li>
-        </ul>
-        <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn store-btn-outline">Get Notified</a>
-      </div>
-
-      <div class="store-card store-card-featured reveal">
-        <div class="store-featured-badge">Most Popular</div>
-        <div class="store-card-header">
-          <span class="store-tier-icon">🔥</span>
-          <div class="store-tier-badge store-tier-pro">Officer</div>
-        </div>
-        <div class="store-card-name">Officer Package</div>
-        <div class="store-card-price">Coming Soon</div>
-        <ul class="store-perks">
-          <li>✔ Everything in Recruit</li>
-          <li>✔ Exclusive job access</li>
-          <li>✔ Custom vehicle skin</li>
-          <li>✔ VIP Discord channel</li>
-          <li>✔ Monthly in-game cash</li>
-        </ul>
-        <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn store-btn-primary">Get Notified</a>
-      </div>
-
-      <div class="store-card reveal">
-        <div class="store-card-header">
-          <span class="store-tier-icon">💎</span>
-          <div class="store-tier-badge store-tier-elite">Commander</div>
-        </div>
-        <div class="store-card-name">Commander Package</div>
-        <div class="store-card-price">Coming Soon</div>
-        <ul class="store-perks">
-          <li>✔ Everything in Officer</li>
-          <li>✔ Custom player model</li>
-          <li>✔ Name in server credits</li>
-          <li>✔ Early access to new servers</li>
-          <li>✔ Direct staff line</li>
-        </ul>
-        <a href="https://discord.gg/7fahT24btF" target="_blank" class="store-btn store-btn-outline">Get Notified</a>
-      </div>
-    </div>
-
-    <p class="store-note reveal">🔒 Store launching soon. Join the Discord to be notified first and receive a launch discount.</p>
-  </section>
-
-  <!-- JOIN / COMMUNITY -->
-  <div class="divider"></div>
-  <section id="join">
-    <p class="section-label reveal">// 04 — Community</p>
-    <h2 class="section-title reveal">Join the <span>Frontline</span></h2>
-    <p class="section-desc reveal" style="margin-left:auto;margin-right:auto;text-align:center">Pick your entry point. Jump straight in or connect with the community first — we've got you covered.</p>
-
-    <div class="join-grid">
-      <a href="https://discord.gg/7fahT24btF" target="_blank" class="join-card reveal">
-        <span class="join-card-icon">💬</span>
-        <div class="join-card-title">Discord Server</div>
-        <p class="join-card-desc">Chat, get help, watch announcements, and meet the community. The hub of everything Frontline.</p>
+  <div class="section">
+    <p class="section-label reveal">// Explore</p>
+    <h2 class="section-title reveal">Where do you want to <span>go?</span></h2>
+    <div class="quicknav">
+      <a href="pages/about.html" class="qcard reveal">
+        <span class="qcard-icon">📡</span>
+        <div class="qcard-title">About Us</div>
+        <p class="qcard-desc">Learn who we are, what we stand for, and the vision behind Frontline Networks.</p>
+        <span class="qcard-arrow">Read More →</span>
       </a>
-      <a href="https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.mode=checkid_setup&openid.return_to=https://frontlinenetx.net/auth/steam&openid.realm=https://frontlinenetx.net&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select" target="_blank" class="join-card reveal">
-        <span class="join-card-icon">🎮</span>
-        <div class="join-card-title">Sign in with Steam</div>
-        <p class="join-card-desc">Link your Steam account to unlock your profile, track progress, and access member features.</p>
+      <a href="pages/servers.html" class="qcard reveal">
+        <span class="qcard-icon">🎮</span>
+        <div class="qcard-title">Our Servers</div>
+        <p class="qcard-desc">View live server status, player count, game modes, and upcoming server launches.</p>
+        <span class="qcard-arrow">View Servers →</span>
       </a>
-      <a href="https://discord.gg/7fahT24btF" target="_blank" class="join-card reveal">
-        <span class="join-card-icon">📋</span>
-        <div class="join-card-title">Staff Applications</div>
-        <p class="join-card-desc">Want to help build the community? Apply via our Discord — we're always looking for passionate players.</p>
+      <a href="pages/store.html" class="qcard reveal">
+        <span class="qcard-icon">🛒</span>
+        <div class="qcard-title">Store</div>
+        <p class="qcard-desc">Support the network and unlock exclusive in-game perks, ranks, and cosmetics.</p>
+        <span class="qcard-arrow">Browse Store →</span>
+      </a>
+      <a href="pages/community.html" class="qcard reveal">
+        <span class="qcard-icon">💬</span>
+        <div class="qcard-title">Community</div>
+        <p class="qcard-desc">Join our Discord, meet the team, apply for staff, and be part of the Frontline family.</p>
+        <span class="qcard-arrow">Join Now →</span>
       </a>
     </div>
-  </section>
+  </div>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">FRONTLINE <span>NETX</span></div>
+    <a class="footer-logo" href="index.html">FRONTLINE <span>NETX</span></a>
     <p class="footer-copy">© 2025 Frontline Networks — All rights reserved</p>
     <ul class="footer-links">
       <li><a href="https://discord.gg/7fahT24btF" target="_blank">Discord</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#store">Store</a></li>
+      <li><a href="pages/about.html">About</a></li>
+      <li><a href="pages/store.html">Store</a></li>
+      <li><a href="pages/community.html">Community</a></li>
     </ul>
   </footer>
 
-</div><!-- /site-wrap -->
+</div>
 
-<script>
-  // ── PARTICLE / GMOD BACKGROUND ──
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [], animId;
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
-  function Particle() {
-    this.reset = function() {
-      this.x = Math.random() * W;
-      this.y = Math.random() * H;
-      this.size = Math.random() * 1.5 + 0.3;
-      this.speedX = (Math.random() - 0.5) * 0.4;
-      this.speedY = (Math.random() - 0.5) * 0.4;
-      this.opacity = Math.random() * 0.5 + 0.1;
-      this.color = Math.random() > 0.7 ? '#e8242e' : '#c8cdd8';
-    };
-    this.reset();
-  }
-
-  function initParticles(n) {
-    particles = [];
-    for (let i = 0; i < n; i++) {
-      const p = new Particle();
-      p.x = Math.random() * W;
-      p.y = Math.random() * H;
-      particles.push(p);
-    }
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    // Draw scanlines
-    for (let y = 0; y < H; y += 4) {
-      ctx.fillStyle = 'rgba(0,0,0,0.03)';
-      ctx.fillRect(0, y, W, 1);
-    }
-
-    particles.forEach(p => {
-      p.x += p.speedX;
-      p.y += p.speedY;
-      if (p.x < 0 || p.x > W || p.y < 0 || p.y > H) p.reset();
-
-      ctx.save();
-      ctx.globalAlpha = p.opacity;
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    });
-
-    // Connect nearby particles
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
-          ctx.save();
-          ctx.globalAlpha = (1 - dist / 100) * 0.08;
-          ctx.strokeStyle = '#e8242e';
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-          ctx.restore();
-        }
-      }
-    }
-
-    animId = requestAnimationFrame(draw);
-  }
-
-  resize();
-  initParticles(80);
-  draw();
-  window.addEventListener('resize', () => {
-    cancelAnimationFrame(animId);
-    resize();
-    initParticles(80);
-    draw();
-  });
-
-  // ── SCROLL REVEAL ──
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  reveals.forEach(el => observer.observe(el));
-
-  // ── NOTIFY FORM SIMPLE PREVENT ──
-  document.querySelector('.notify-form').addEventListener('submit', e => e.preventDefault());
-</script>
-
+<script src="assets/js/main.js"></script>
 </body>
 </html>
