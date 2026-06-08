@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frontline Networks</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg"/>
+  <link rel="shortcut icon" href="assets/images/favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
@@ -747,8 +749,7 @@
   <!-- ── NAV ── -->
   <nav>
     <div class="nav-logo" onclick="showView('home')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#4fc3f7"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-      FRONTLINE <span class="logo-accent">NETX</span>
+      <img src="assets/images/logo.svg" alt="Frontline Networks" style="height:38px;width:auto;" />
     </div>
     <ul class="nav-links">
       <li><button onclick="showView('home')"    id="nav-home">Home</button></li>
@@ -821,7 +822,7 @@
         <div class="stat-lbl">Current Game</div>
       </div>
       <div class="stat-item">
-        <div class="stat-val">PoliceRP</div>
+        <div class="stat-val"><span data-server-gamemode>PoliceRP</span></div>
         <div class="stat-lbl">Active Mode</div>
       </div>
     </div>
@@ -902,7 +903,7 @@
             <div class="stat-cell-lbl">Players</div>
           </div>
           <div class="stat-cell">
-            <div class="stat-cell-val">PoliceRP</div>
+            <div class="stat-cell-val"><span data-server-gamemode>PoliceRP</span></div>
             <div class="stat-cell-lbl">Mode</div>
           </div>
           <div class="stat-cell">
@@ -1096,7 +1097,9 @@
 
   <!-- ── FOOTER ── -->
   <footer>
-    <div class="footer-logo" onclick="showView('home')">FRONTLINE <span>NETX</span></div>
+    <div class="footer-logo" onclick="showView('home')">
+      <img src="assets/images/logo.svg" alt="Frontline Networks" style="height:28px;width:auto;opacity:0.8;" />
+    </div>
     <p class="footer-copy">© 2025 Frontline Networks — All rights reserved</p>
     <ul class="footer-links">
       <li><a href="https://discord.gg/7fahT24btF" target="_blank">Discord</a></li>
@@ -1228,16 +1231,17 @@ showView(initView);
 
 /* ── SERVER STATUS ── */
 const SERVER_CONFIG = {
-  ip: '5.9.32.206',
-  port: 27580,
-  workerUrl: 'https://frontline-status.jjkeanuza.workers.dev'
+  ip: 'YOUR_SERVER_IP',
+  port: 27015,
+  workerUrl: null
 };
 
 async function fetchServerStatus(){
-  const statusEls = document.querySelectorAll('[data-server-status]');
-  const playerEls = document.querySelectorAll('[data-server-players]');
-  const maxEls    = document.querySelectorAll('[data-server-maxplayers]');
-  const dots      = document.querySelectorAll('[data-status-dot]');
+  const statusEls   = document.querySelectorAll('[data-server-status]');
+  const playerEls   = document.querySelectorAll('[data-server-players]');
+  const maxEls      = document.querySelectorAll('[data-server-maxplayers]');
+  const dots        = document.querySelectorAll('[data-status-dot]');
+  const gamemodeEls = document.querySelectorAll('[data-server-gamemode]');
 
   if(!SERVER_CONFIG.workerUrl || SERVER_CONFIG.ip==='YOUR_SERVER_IP'){
     statusEls.forEach(e=>e.textContent='Offline');
@@ -1248,13 +1252,14 @@ async function fetchServerStatus(){
   }
 
   try {
-    const res = await fetch(SERVER_CONFIG.workerUrl, {signal:AbortSignal.timeout(5000)});
+    const res = await fetch(SERVER_CONFIG.workerUrl, {signal:AbortSignal.timeout(8000)});
     const data = await res.json();
     if(data.online){
       statusEls.forEach(e=>e.textContent='Online');
       playerEls.forEach(e=>e.textContent=data.players??'0');
       maxEls.forEach(e=>e.textContent=data.maxplayers??'0');
       dots.forEach(d=>{ d.className='dot dot-live'; });
+      if(data.gamemode) gamemodeEls.forEach(e=>e.textContent=data.gamemode);
     } else {
       statusEls.forEach(e=>e.textContent='Offline');
       playerEls.forEach(e=>e.textContent='0');
