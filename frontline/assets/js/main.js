@@ -108,8 +108,8 @@
    4. Replace WORKER_URL with your worker URL
 */
 const SERVER_CONFIG = {
-  ip: 'YOUR_SERVER_IP',       // e.g. '123.456.789.0'
-  port: 27015,                 // your GMOD server port
+  ip: '5.9.32.206', 
+  port: 27580,                 // your GMOD server port
   workerUrl: null              // e.g. 'https://fl-status.yourname.workers.dev'
 };
 
