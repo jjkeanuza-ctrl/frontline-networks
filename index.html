@@ -906,34 +906,42 @@
           <div class="server-info">
             <div class="server-name">Garry's <span>Mod</span></div>
             <div class="server-tag-row">
-              <span class="tag tag-blue">PoliceRP</span>
+              <span class="tag tag-blue"><span data-server-gamemode>PoliceRP</span></span>
               <span class="tag tag-ice">Roleplay</span>
               <span class="tag tag-gray">Server #1</span>
+              <span class="tag" id="server-status-tag" style="color:#4a6a80;border-color:rgba(74,106,128,0.3);background:rgba(74,106,128,0.06)"><span class="dot dot-off" data-status-dot style="margin-right:5px"></span><span data-server-status>Offline</span></span>
             </div>
             <p class="server-desc">Step into a living city where law enforcement meets the criminal underworld. Take the badge, rise through the ranks, investigate crimes — or build your life on the other side of the law. Deep mechanics, active staff, serious roleplay.</p>
-            <div class="server-ip">🖥 IP: Coming Soon &nbsp;|&nbsp; Port: 27015</div>
+            <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;margin-top:0.5rem">
+              <div class="server-ip">🖥 <span data-server-name>Frontline Networks</span> &nbsp;|&nbsp; 5.9.32.206:27580</div>
+              <button class="btn btn-solid" id="join-btn" onclick="window.open('steam://connect/5.9.32.206:27580','_blank')" style="padding:0.5rem 1.25rem;font-size:0.85rem">🎮 Join Server</button>
+              <a href="steam://connect/5.9.32.206:27580" class="btn btn-outline" style="padding:0.5rem 1.25rem;font-size:0.85rem;display:none" id="join-link">🎮 Join Now</a>
+            </div>
           </div>
         </div>
         <div class="server-stats-row">
           <div class="stat-cell">
-            <div class="stat-cell-val"><span class="dot dot-off" data-status-dot></span><span data-server-status>Offline</span></div>
+            <div class="stat-cell-val">
+              <span class="dot dot-off" data-status-dot></span>
+              <span data-server-status>Offline</span>
+            </div>
             <div class="stat-cell-lbl">Status</div>
           </div>
           <div class="stat-cell">
             <div class="stat-cell-val"><span data-server-players>0</span>&nbsp;/&nbsp;<span data-server-maxplayers>0</span></div>
-            <div class="stat-cell-lbl">Players</div>
+            <div class="stat-cell-lbl">Players Online</div>
           </div>
           <div class="stat-cell">
-            <div class="stat-cell-val"><span data-server-gamemode>PoliceRP</span></div>
-            <div class="stat-cell-lbl">Mode</div>
+            <div class="stat-cell-val"><span data-server-gamemode>—</span></div>
+            <div class="stat-cell-lbl">Game Mode</div>
           </div>
           <div class="stat-cell">
             <div class="stat-cell-val"><span data-server-map>—</span></div>
-            <div class="stat-cell-lbl">Map</div>
+            <div class="stat-cell-lbl">Current Map</div>
           </div>
           <div class="stat-cell">
-            <div class="stat-cell-val">24/7</div>
-            <div class="stat-cell-lbl">Scheduled</div>
+            <div class="stat-cell-val" id="server-uptime">—</div>
+            <div class="stat-cell-lbl">Last Checked</div>
           </div>
         </div>
       </div>
@@ -1291,6 +1299,14 @@ async function fetchServerStatus(){
   const gamemodeEls = document.querySelectorAll('[data-server-gamemode]');
   const nameEls     = document.querySelectorAll('[data-server-name]');
   const mapEls      = document.querySelectorAll('[data-server-map]');
+  const uptimeEl    = document.getElementById('server-uptime');
+  const statusTag   = document.getElementById('server-status-tag');
+
+  // Update last-checked time
+  if(uptimeEl){
+    const now = new Date();
+    uptimeEl.textContent = now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }
 
   try {
     const res = await fetch(SERVER_CONFIG.workerUrl, {signal:AbortSignal.timeout(8000)});
@@ -1300,10 +1316,12 @@ async function fetchServerStatus(){
       // Status
       statusEls.forEach(e=>e.textContent='Online');
       dots.forEach(d=>{ d.className='dot dot-live'; });
+      // Update status tag colour to green
+      if(statusTag){ statusTag.style.color='#4ade80'; statusTag.style.borderColor='rgba(74,222,128,0.4)'; statusTag.style.background='rgba(74,222,128,0.08)'; }
       // Players
       playerEls.forEach(e=>e.textContent=data.players??'0');
       maxEls.forEach(e=>e.textContent=data.maxplayers??'0');
-      // Gamemode — shown everywhere with data-server-gamemode including ticker
+      // Gamemode
       if(data.gamemode) gamemodeEls.forEach(e=>e.textContent=data.gamemode);
       // Map
       if(data.map) mapEls.forEach(e=>e.textContent=data.map);
@@ -1314,6 +1332,7 @@ async function fetchServerStatus(){
       playerEls.forEach(e=>e.textContent='0');
       maxEls.forEach(e=>e.textContent='0');
       dots.forEach(d=>{ d.className='dot dot-off'; });
+      if(statusTag){ statusTag.style.color='#4a6a80'; statusTag.style.borderColor='rgba(74,106,128,0.3)'; statusTag.style.background='rgba(74,106,128,0.06)'; }
     }
   } catch(err) {
     console.warn('Server status fetch failed:', err.message);
