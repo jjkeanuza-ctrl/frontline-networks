@@ -3,7 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frontline Networks</title>
+  <title>Frontline Networks — GMOD PoliceRP Community</title>
+
+  <!-- ── SEO ── -->
+  <meta name="description" content="Frontline Networks — A dedicated GMOD PoliceRP gaming community. Immersive roleplay, active staff, and a community that always has your six." />
+  <meta name="keywords" content="Frontline Networks, GMOD, PoliceRP, Garry's Mod, Roleplay, Gaming Community" />
+  <meta name="author" content="Frontline Networks" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://frontlinenetx.net" />
+
+  <!-- ── Open Graph (Discord / social previews) ── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://frontlinenetx.net" />
+  <meta property="og:title"       content="Frontline Networks — GMOD PoliceRP" />
+  <meta property="og:description" content="A dedicated GMOD PoliceRP gaming community. Immersive roleplay, active staff, and a community that always has your six." />
+  <meta property="og:image"       content="https://frontlinenetx.net/assets/images/discord-icon.svg" />
+  <meta name="theme-color"        content="#4fc3f7" />
+
+  <!-- ── Twitter / X card ── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Frontline Networks — GMOD PoliceRP" />
+  <meta name="twitter:description" content="A dedicated GMOD PoliceRP gaming community." />
+  <meta name="twitter:image"       content="https://frontlinenetx.net/assets/images/discord-icon.svg" />
+
+  <!-- ── Security headers (also set via _headers file for Cloudflare) ── -->
+  <meta http-equiv="X-Content-Type-Options"    content="nosniff" />
+  <meta http-equiv="X-XSS-Protection"          content="1; mode=block" />
+  <meta http-equiv="Referrer-Policy"           content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy"        content="geolocation=(), microphone=(), camera=()" />
+
+  <!-- ── Performance ── -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://frontline-status.jjkeanuza.workers.dev" />
+  <link rel="preconnect" href="https://frontline-status.jjkeanuza.workers.dev" crossorigin />
+
+  <title>Frontline Networks — GMOD PoliceRP Community</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='fg1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='50%25' stop-color='%234fc3f7'/%3E%3Cstop offset='100%25' stop-color='%230277bd'/%3E%3C/linearGradient%3E%3ClinearGradient id='fg2' x1='100%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234fc3f7'/%3E%3Cstop offset='100%25' stop-color='%23e0f4ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15' fill='%23060c14'/%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='url(%23fg1)' stroke-width='1.5'/%3E%3Crect x='7' y='10' width='3' height='12' fill='url(%23fg1)' rx='0.5'/%3E%3Crect x='7' y='10' width='9' height='3' fill='url(%23fg1)' rx='0.5'/%3E%3Crect x='7' y='15' width='7' height='2.5' fill='url(%23fg2)' rx='0.5'/%3E%3Crect x='18' y='10' width='3' height='12' fill='url(%23fg1)' rx='0.5'/%3E%3Crect x='24' y='10' width='3' height='12' fill='url(%23fg1)' rx='0.5'/%3E%3Cline x1='18' y1='10' x2='27' y2='22' stroke='url(%23fg2)' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1281,8 +1317,21 @@ showView(initView);
     animId=requestAnimationFrame(draw);
   }
 
-  resize(); init(80); draw();
-  window.addEventListener('resize',()=>{ cancelAnimationFrame(animId); resize(); init(80); draw(); });
+  // Reduce particles on mobile for performance
+  const particleCount = window.innerWidth < 768 ? 40 : 80;
+  resize(); init(particleCount); draw();
+
+  // Debounce resize to avoid thrashing
+  let resizeTimer;
+  window.addEventListener('resize',()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(()=>{
+      cancelAnimationFrame(animId);
+      resize();
+      init(window.innerWidth < 768 ? 40 : 80);
+      draw();
+    }, 150);
+  });
 })();
 
 /* ── SERVER STATUS ── */

@@ -1,0 +1,8 @@
+# Force www to non-www
+https://www.frontlinenetx.net/* https://frontlinenetx.net/:splat 301
+
+# Redirect old page paths to hash routes on the SPA
+/about      https://frontlinenetx.net/#about      301
+/servers    https://frontlinenetx.net/#servers    301
+/store      https://frontlinenetx.net/#store      301
+/community  https://frontlinenetx.net/#community  301
