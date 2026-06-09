@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frontline Networks</title>
-  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg"/>
-  <link rel="shortcut icon" href="assets/images/favicon.svg"/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='fg1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='50%25' stop-color='%234fc3f7'/%3E%3Cstop offset='100%25' stop-color='%230277bd'/%3E%3C/linearGradient%3E%3ClinearGradient id='fg2' x1='100%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234fc3f7'/%3E%3Cstop offset='100%25' stop-color='%23e0f4ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15' fill='%23060c14'/%3E%3Cpolygon points='16,2 28,9 28,23 16,30 4,23 4,9' fill='none' stroke='url(%23fg1)' stroke-width='1.5'/%3E%3Crect x='7' y='10' width='3' height='12' fill='url(%23fg1)' rx='0.5'/%3E%3Crect x='7' y='10' width='9' height='3' fill='url(%23fg1)' rx='0.5'/%3E%3Crect x='7' y='15' width='7' height='2.5' fill='url(%23fg2)' rx='0.5'/%3E%3Crect x='18' y='10' width='3' height='12' fill='url(%23fg1)' rx='0.5'/%3E%3Crect x='24' y='10' width='3' height='12' fill='url(%23fg1)' rx='0.5'/%3E%3Cline x1='18' y1='10' x2='27' y2='22' stroke='url(%23fg2)' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
@@ -749,7 +748,29 @@
   <!-- ── NAV ── -->
   <nav>
     <div class="nav-logo" onclick="showView('home')">
-      <img src="assets/images/logo.svg" alt="Frontline Networks" style="height:38px;width:auto;" />
+      <svg width="180" height="38" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="nl1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#0277bd"/></linearGradient>
+          <linearGradient id="nl2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#e0f4ff"/></linearGradient>
+          <linearGradient id="nlT" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="60%" stop-color="#ffffff"/><stop offset="100%" stop-color="#b0cfe8"/></linearGradient>
+        </defs>
+        <polygon points="40,4 69,21 69,55 40,72 11,55 11,21" fill="none" stroke="url(#nl1)" stroke-width="1.8"/>
+        <polygon points="40,10 63,23 63,53 40,66 17,53 17,23" fill="rgba(6,16,30,0.9)" stroke="rgba(79,195,247,0.25)" stroke-width="1"/>
+        <rect x="26" y="25" width="5" height="30" fill="url(#nl1)" rx="1"/>
+        <rect x="26" y="25" width="22" height="5" fill="url(#nl1)" rx="1"/>
+        <rect x="26" y="37" width="17" height="4.5" fill="url(#nl2)" rx="1"/>
+        <rect x="52" y="25" width="5" height="30" fill="url(#nl1)" rx="1"/>
+        <rect x="63" y="25" width="5" height="30" fill="url(#nl1)" rx="1"/>
+        <line x1="52" y1="25" x2="68" y2="55" stroke="url(#nl2)" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="40" cy="4"  r="1.5" fill="#4fc3f7" opacity="0.85"/>
+        <circle cx="69" cy="21" r="1.5" fill="#4fc3f7" opacity="0.6"/>
+        <circle cx="69" cy="55" r="1.5" fill="#4fc3f7" opacity="0.6"/>
+        <circle cx="40" cy="72" r="1.5" fill="#4fc3f7" opacity="0.85"/>
+        <circle cx="11" cy="55" r="1.5" fill="#4fc3f7" opacity="0.6"/>
+        <circle cx="11" cy="21" r="1.5" fill="#4fc3f7" opacity="0.6"/>
+        <text x="88" y="38" font-family="'Courier New',Courier,monospace" font-size="22" font-weight="700" letter-spacing="3" fill="url(#nlT)">FRONTLINE</text>
+        <text x="90" y="56" font-family="'Courier New',Courier,monospace" font-size="11" letter-spacing="7.5" fill="rgba(79,195,247,0.55)">NETWORKS</text>
+      </svg>
     </div>
     <ul class="nav-links">
       <li><button onclick="showView('home')"    id="nav-home">Home</button></li>
@@ -780,7 +801,7 @@
     <div class="ticker-inner">
       <span class="ticker-item">⬛ Frontline Networks</span>
       <span class="ticker-sep">///</span>
-      <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
+      <span class="ticker-item">🎮 GMOD <span data-server-gamemode>PoliceRP</span> — <span data-server-status>Offline</span></span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">👥 Players: <span data-server-players>0</span></span>
       <span class="ticker-sep">///</span>
@@ -788,7 +809,7 @@
       <span class="ticker-sep">///</span>
       <span class="ticker-item">⬛ Frontline Networks</span>
       <span class="ticker-sep">///</span>
-      <span class="ticker-item">🎮 GMOD PoliceRP — <span data-server-status>Offline</span></span>
+      <span class="ticker-item">🎮 GMOD <span data-server-gamemode>PoliceRP</span> — <span data-server-status>Offline</span></span>
       <span class="ticker-sep">///</span>
       <span class="ticker-item">👥 Players: <span data-server-players>0</span></span>
       <span class="ticker-sep">///</span>
@@ -905,6 +926,10 @@
           <div class="stat-cell">
             <div class="stat-cell-val"><span data-server-gamemode>PoliceRP</span></div>
             <div class="stat-cell-lbl">Mode</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-cell-val"><span data-server-map>—</span></div>
+            <div class="stat-cell-lbl">Map</div>
           </div>
           <div class="stat-cell">
             <div class="stat-cell-val">24/7</div>
@@ -1098,7 +1123,29 @@
   <!-- ── FOOTER ── -->
   <footer>
     <div class="footer-logo" onclick="showView('home')">
-      <img src="assets/images/logo.svg" alt="Frontline Networks" style="height:28px;width:auto;opacity:0.8;" />
+      <svg width="140" height="30" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="opacity:0.8">
+        <defs>
+          <linearGradient id="fl1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#0277bd"/></linearGradient>
+          <linearGradient id="fl2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="100%" stop-color="#e0f4ff"/></linearGradient>
+          <linearGradient id="flT" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4fc3f7"/><stop offset="60%" stop-color="#ffffff"/><stop offset="100%" stop-color="#b0cfe8"/></linearGradient>
+        </defs>
+        <polygon points="40,4 69,21 69,55 40,72 11,55 11,21" fill="none" stroke="url(#fl1)" stroke-width="1.8"/>
+        <polygon points="40,10 63,23 63,53 40,66 17,53 17,23" fill="rgba(6,16,30,0.9)" stroke="rgba(79,195,247,0.25)" stroke-width="1"/>
+        <rect x="26" y="25" width="5" height="30" fill="url(#fl1)" rx="1"/>
+        <rect x="26" y="25" width="22" height="5" fill="url(#fl1)" rx="1"/>
+        <rect x="26" y="37" width="17" height="4.5" fill="url(#fl2)" rx="1"/>
+        <rect x="52" y="25" width="5" height="30" fill="url(#fl1)" rx="1"/>
+        <rect x="63" y="25" width="5" height="30" fill="url(#fl1)" rx="1"/>
+        <line x1="52" y1="25" x2="68" y2="55" stroke="url(#fl2)" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="40" cy="4"  r="1.5" fill="#4fc3f7" opacity="0.85"/>
+        <circle cx="69" cy="21" r="1.5" fill="#4fc3f7" opacity="0.6"/>
+        <circle cx="69" cy="55" r="1.5" fill="#4fc3f7" opacity="0.6"/>
+        <circle cx="40" cy="72" r="1.5" fill="#4fc3f7" opacity="0.85"/>
+        <circle cx="11" cy="55" r="1.5" fill="#4fc3f7" opacity="0.6"/>
+        <circle cx="11" cy="21" r="1.5" fill="#4fc3f7" opacity="0.6"/>
+        <text x="88" y="38" font-family="'Courier New',Courier,monospace" font-size="22" font-weight="700" letter-spacing="3" fill="url(#flT)">FRONTLINE</text>
+        <text x="90" y="56" font-family="'Courier New',Courier,monospace" font-size="11" letter-spacing="7.5" fill="rgba(79,195,247,0.55)">NETWORKS</text>
+      </svg>
     </div>
     <p class="footer-copy">© 2025 Frontline Networks — All rights reserved</p>
     <ul class="footer-links">
@@ -1231,9 +1278,9 @@ showView(initView);
 
 /* ── SERVER STATUS ── */
 const SERVER_CONFIG = {
-  ip: 'YOUR_SERVER_IP',
-  port: 27015,
-  workerUrl: null
+  ip: '5.9.32.206',
+  port: 27580,
+  workerUrl: 'https://frontline-status.jjkeanuza.workers.dev'
 };
 
 async function fetchServerStatus(){
@@ -1242,31 +1289,34 @@ async function fetchServerStatus(){
   const maxEls      = document.querySelectorAll('[data-server-maxplayers]');
   const dots        = document.querySelectorAll('[data-status-dot]');
   const gamemodeEls = document.querySelectorAll('[data-server-gamemode]');
-
-  if(!SERVER_CONFIG.workerUrl || SERVER_CONFIG.ip==='YOUR_SERVER_IP'){
-    statusEls.forEach(e=>e.textContent='Offline');
-    playerEls.forEach(e=>e.textContent='0');
-    maxEls.forEach(e=>e.textContent='0');
-    dots.forEach(d=>{ d.className='dot dot-off'; });
-    return;
-  }
+  const nameEls     = document.querySelectorAll('[data-server-name]');
+  const mapEls      = document.querySelectorAll('[data-server-map]');
 
   try {
     const res = await fetch(SERVER_CONFIG.workerUrl, {signal:AbortSignal.timeout(8000)});
     const data = await res.json();
+
     if(data.online){
+      // Status
       statusEls.forEach(e=>e.textContent='Online');
+      dots.forEach(d=>{ d.className='dot dot-live'; });
+      // Players
       playerEls.forEach(e=>e.textContent=data.players??'0');
       maxEls.forEach(e=>e.textContent=data.maxplayers??'0');
-      dots.forEach(d=>{ d.className='dot dot-live'; });
+      // Gamemode — shown everywhere with data-server-gamemode including ticker
       if(data.gamemode) gamemodeEls.forEach(e=>e.textContent=data.gamemode);
+      // Map
+      if(data.map) mapEls.forEach(e=>e.textContent=data.map);
+      // Server name
+      if(data.name) nameEls.forEach(e=>e.textContent=data.name);
     } else {
       statusEls.forEach(e=>e.textContent='Offline');
       playerEls.forEach(e=>e.textContent='0');
       maxEls.forEach(e=>e.textContent='0');
       dots.forEach(d=>{ d.className='dot dot-off'; });
     }
-  } catch {
+  } catch(err) {
+    console.warn('Server status fetch failed:', err.message);
     statusEls.forEach(e=>e.textContent='Offline');
     playerEls.forEach(e=>e.textContent='0');
     maxEls.forEach(e=>e.textContent='0');

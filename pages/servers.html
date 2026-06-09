@@ -19,7 +19,7 @@
     }
 
     .server-banner {
-      background: linear-gradient(135deg, #0d1117 0%, #1a0408 50%, #0d1117 100%);
+      background: linear-gradient(135deg, #060c18 0%, #071828 50%, #060c18 100%);
       padding: 2.5rem;
       display: flex;
       align-items: flex-start;
@@ -31,7 +31,7 @@
     .game-badge {
       flex-shrink: 0;
       width: 90px; height: 90px;
-      background: rgba(232,36,46,0.1);
+      background: rgba(79,195,247,0.1);
       border: 2px solid var(--fl-red);
       border-radius: 8px;
       display: flex;
@@ -86,7 +86,7 @@
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.72rem;
       letter-spacing: 0.15em;
-      color: rgba(200,205,216,0.4);
+      color: rgba(176,207,232,0.4);
       text-transform: uppercase;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
@@ -124,7 +124,7 @@
       font-family: 'Share Tech Mono', monospace;
       font-size: 0.6rem;
       letter-spacing: 0.2em;
-      color: rgba(200,205,216,0.38);
+      color: rgba(176,207,232,0.38);
       text-transform: uppercase;
       margin-top: 0.3rem;
     }
@@ -149,9 +149,9 @@
     }
 
     .cat-card:hover {
-      border-color: rgba(232,36,46,0.5);
+      border-color: rgba(79,195,247,0.5);
       transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.35), 0 0 14px rgba(232,36,46,0.07);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35), 0 0 14px rgba(79,195,247,0.07);
     }
 
     .cat-card.coming {
@@ -162,8 +162,8 @@
     .cat-icon {
       width: 50px; height: 50px;
       flex-shrink: 0;
-      background: rgba(232,36,46,0.1);
-      border: 1px solid rgba(232,36,46,0.25);
+      background: rgba(79,195,247,0.1);
+      border: 1px solid rgba(79,195,247,0.25);
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -172,8 +172,8 @@
     }
 
     .cat-icon.coming-icon {
-      background: rgba(245,166,35,0.08);
-      border-color: rgba(245,166,35,0.2);
+      background: rgba(79,195,247,0.08);
+      border-color: rgba(79,195,247,0.2);
     }
 
     .cat-body { flex: 1; }
@@ -206,12 +206,12 @@
     }
 
     .status-live { color: #4ade80; }
-    .status-soon { color: var(--fl-gold); }
+    .status-soon { color: #c9e8f7; }
 
     /* ── COMING SOON PANEL ── */
     .coming-panel {
-      background: linear-gradient(135deg, rgba(245,166,35,0.04) 0%, var(--fl-panel) 50%, rgba(245,166,35,0.04) 100%);
-      border: 1px solid rgba(245,166,35,0.2);
+      background: linear-gradient(135deg, rgba(79,195,247,0.04) 0%, var(--fl-panel) 50%, rgba(79,195,247,0.04) 100%);
+      border: 1px solid rgba(79,195,247,0.2);
       border-radius: 8px;
       padding: 3rem 2.5rem;
       text-align: center;
@@ -224,7 +224,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--fl-gold), transparent);
+      background: linear-gradient(90deg, transparent, var(--fl-red), transparent);
     }
 
     .coming-badge {
@@ -233,9 +233,9 @@
       font-size: 0.68rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--fl-gold);
-      background: rgba(245,166,35,0.1);
-      border: 1px solid rgba(245,166,35,0.3);
+      color: #c9e8f7;
+      background: rgba(79,195,247,0.1);
+      border: 1px solid rgba(79,195,247,0.25);
       padding: 0.3rem 1rem;
       border-radius: 3px;
       margin-bottom: 1.5rem;
@@ -267,8 +267,8 @@
     }
 
     .coming-game {
-      background: rgba(245,166,35,0.07);
-      border: 1px solid rgba(245,166,35,0.18);
+      background: rgba(79,195,247,0.07);
+      border: 1px solid rgba(150,210,245,0.18);
       border-radius: 5px;
       padding: 0.65rem 1.3rem;
       display: flex;
@@ -278,7 +278,7 @@
       font-weight: 600;
       font-size: 0.95rem;
       letter-spacing: 0.06em;
-      color: rgba(200,205,216,0.6);
+      color: rgba(176,207,232,0.6);
       text-transform: uppercase;
     }
 
@@ -303,12 +303,12 @@
       transition: border-color 0.2s;
     }
 
-    .notify-input::placeholder { color: rgba(200,205,216,0.3); }
-    .notify-input:focus { border-color: rgba(245,166,35,0.5); }
+    .notify-input::placeholder { color: rgba(176,207,232,0.3); }
+    .notify-input:focus { border-color: rgba(150,210,245,0.5); }
 
     .notify-btn {
-      background: var(--fl-gold);
-      color: #1a0e00;
+      background: #4fc3f7;
+      color: #021824;
       font-family: 'Rajdhani', sans-serif;
       font-weight: 700;
       font-size: 0.92rem;
@@ -322,7 +322,7 @@
       transition: background 0.2s, box-shadow 0.2s;
     }
 
-    .notify-btn:hover { background: #e0941a; box-shadow: 0 0 18px rgba(245,166,35,0.35); }
+    .notify-btn:hover { background: #0288d1; box-shadow: 0 0 18px rgba(79,195,247,0.4); }
   </style>
 </head>
 <body>
